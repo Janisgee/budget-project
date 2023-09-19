@@ -1,73 +1,20 @@
 const Transaction = require('./../models/transactionModel');
-
-exports.listTransactions = async (req, res, next) => {
-  const start = req.query.start;
-  const end = req.query.end;
-  console.log(start, end);
-
-  const listRange = Transaction.find({ date: { $gte: start, $lte: end } });
-
-  const transactions = await listRange;
-};
+const APIFeatures = require('./../utils/APIFeatures');
 
 // 2)ROUTE HANDLERS
 exports.getAllTransactions = async (req, res) => {
   try {
-    //1A) FILTERING
-    //Build Query
-    console.log(req.query);
-
-    const queryObj = { ...req.query };
-    const excludedFields = ['start', 'end', 'page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach((el) => delete queryObj[el]);
-    //1B) Advance Filtering
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    // console.log(JSON.parse(queryStr));
-
-    let query = Transaction.find(JSON.parse(queryStr));
-
-    //1C) LIST RANGE FILTERING BY DATE
-    if (req.query.start && req.query.end) {
-      const start = req.query.start;
-      const end = req.query.end;
-      console.log(start, end);
-
-      const filterRange = { date: { $gte: start, $lte: end } };
-
-      query = query.find(filterRange);
-    }
-
-    //2) SORTING
-
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ');
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort('-date');
-    }
-
-    //3) LIMITING FIELDS
-    if (req.query.fields) {
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else {
-      query = query.select('-__v');
-    }
-
-    //4) PAGINATION
-    const page = req.query.page * 1 || 1; //Default page 1
-    const limit = req.query.limit * 1 || 100; //Default 100 results per page
-    const skip = (page - 1) * limit;
-    query = query.skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const numTransactions = await Transaction.countDocuments();
-      if (skip >= numTransactions) throw new Error('This page does not exist.');
-    }
-
     //Execute Query
-    const transactions = await query;
+    const features = new APIFeatures(Transaction.find(), req.query)
+      .filter()
+      .filterByDate()
+      .sort()
+      .limitFields()
+      .paginate();
+    console.log('features', features, '😁😁😁');
+    const transactions = await features.exec();
+
+    // const transactions = await query;
 
     res.status(200).json({
       message: 'success',
@@ -151,6 +98,40 @@ exports.deleteTransaction = async (req, res) => {
     res.status(204).json({
       status: 'success',
       data: null,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.getTransactionsStats = async (req, res) => {
+  try {
+    const stats = await Transaction.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date('2023-01'),
+            $lt: new Date('2024-06'),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { type: '$type', category: '$category' },
+          numTransactions: { $sum: 1 },
+          sumValue: { $sum: '$value' },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        stats,
+      },
     });
   } catch (err) {
     res.status(400).json({
