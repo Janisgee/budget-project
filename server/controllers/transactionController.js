@@ -109,12 +109,20 @@ exports.deleteTransaction = async (req, res) => {
 
 exports.getTransactionsStats = async (req, res) => {
   try {
+    const year = req.params.year * 1;
+    const month = req.params.month * 1;
+    const start = new Date(Date.UTC(year, month ? month - 1 : 0));
+
+    const end = new Date(start);
+    end.setMonth(start.getMonth() + (month ? 1 : 12));
+    console.log(month, start, end);
     const stats = await Transaction.aggregate([
+      { $match: { type: 'Expense' } },
       {
         $match: {
           date: {
-            $gte: new Date('2023-01'),
-            $lt: new Date('2024-06'),
+            $gte: start,
+            $lt: end,
           },
         },
       },
@@ -123,12 +131,15 @@ exports.getTransactionsStats = async (req, res) => {
           _id: { type: '$type', category: '$category' },
           numTransactions: { $sum: 1 },
           sumValue: { $sum: '$value' },
+          date: { $push: '$date' },
+          value: { $push: '$value' },
         },
       },
     ]);
 
     res.status(200).json({
       status: 'success',
+      result: stats.length,
       data: {
         stats,
       },

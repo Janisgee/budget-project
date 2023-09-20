@@ -10,7 +10,11 @@ const transactionController = require('../controllers/transactionController');
 // 3)ROUTES
 const router = express.Router();
 
-router.route('/getStats').get(transactionController.getTransactionsStats);
+router.route('/getStats/:year').get(transactionController.getTransactionsStats);
+
+router
+  .route('/getStats/:year/:month')
+  .get(transactionController.getTransactionsStats);
 
 router
   .route('/')
