@@ -11,7 +11,7 @@ exports.getAllTransactions = async (req, res) => {
       .sort()
       .limitFields()
       .paginate();
-    console.log('features', features, '😁😁😁');
+    // console.log('features', features, '😁😁😁');
     const transactions = await features.exec();
 
     // const transactions = await query;

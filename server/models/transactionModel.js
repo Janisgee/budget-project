@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 //Schema
 const transactionSchema = new mongoose.Schema({
@@ -6,6 +7,7 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     default: '💡 Uncategorized',
   },
+  slug: { type: String },
   date: {
     type: Date,
     default: new Date().toISOString(),
@@ -30,6 +32,18 @@ const transactionSchema = new mongoose.Schema({
   },
 });
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+transactionSchema.pre('save', function (next) {
+  console.log('Pre Schema');
+  this.slug = slugify(this.category, { lower: true });
+  next();
+});
 
+// transactionSchema.post('save', function (doc, next) {
+//   console.log('Post Schema');
+
+//   console.log(doc);
+//   next();
+// });
+
+const Transaction = mongoose.model('Transaction', transactionSchema);
 module.exports = Transaction;
