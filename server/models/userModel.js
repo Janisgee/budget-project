@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must hava a password.'],
     minLength: [8, 'Password length must be at least 8 characters.'],
     maxLength: [20, 'Password length must not be longer than 20 characters.'],
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -30,12 +31,19 @@ const userSchema = new mongoose.Schema({
   accountCreateAt: { type: Date, default: new Date().toISOString() },
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async (next) => {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   next();
 });
+
+userSchema.methods.correctPassword = async (
+  candidatePassword,
+  userPassword,
+) => {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
