@@ -16,7 +16,7 @@ const transactionSchema = new mongoose.Schema({
       Date.UTC('2020'),
       'A transaction date must not older than year 2020.',
     ],
-    max: [Date.UTC('2300'), 'A transaction date must not more than year 2300'],
+    max: [Date.UTC('2300'), 'A transaction date must not more than year 2300.'],
   },
   tag: {
     type: String,
