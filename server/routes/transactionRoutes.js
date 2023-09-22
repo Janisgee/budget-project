@@ -1,5 +1,6 @@
 const express = require('express');
 const transactionController = require('../controllers/transactionController');
+const authController = require('./../controllers/authController');
 
 // app.get('/api/v1/transactions', getAllTransactions);
 // app.get('/api/v1/transactions/:id', getTransaction);
@@ -18,7 +19,7 @@ router
 
 router
   .route('/')
-  .get(transactionController.getAllTransactions)
+  .get(authController.protect, transactionController.getAllTransactions)
   .post(transactionController.createTransaction);
 
 router
