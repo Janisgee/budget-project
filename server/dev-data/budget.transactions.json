@@ -1,0 +1,354 @@
+[
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a732"
+    },
+    "userId": "650da3fbdd38e8c95aae194f",
+    "category": "🍽️ Eating Out",
+    "date": {
+      "$date": "2023-07-02T00:00:00.000Z"
+    },
+    "tag": "Mcdonald",
+    "type": "Expense",
+    "value": 60,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a733"
+    },
+    "userId": "650da43841ae2ac0764aaea7",
+    "category": "💵 Salary #1",
+    "date": {
+      "$date": "2023-08-02T00:00:00.000Z"
+    },
+    "tag": "Salary From Company",
+    "type": "Income",
+    "value": 100000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a734"
+    },
+    "userId": "650da46829fa8e0e5bce2c8d",
+    "category": "💰 Tax Return",
+    "date": {
+      "$date": "2023-07-25T00:00:00.000Z"
+    },
+    "tag": "Tax",
+    "type": "Income",
+    "value": 3000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a735"
+    },
+    "userId": "650da3fbdd38e8c95aae194f",
+    "category": "💰 Tax Return",
+    "date": {
+      "$date": "2023-06-15T00:00:00.000Z"
+    },
+    "tag": "Tax",
+    "type": "Income",
+    "value": 8000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a731"
+    },
+    "userId": "650da495691e20c6e1111c72",
+    "category": "🚗 Car",
+    "date": {
+      "$date": "2022-12-05T00:00:00.000Z"
+    },
+    "tag": "Car Maintance",
+    "type": "Expense",
+    "value": 1000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a730"
+    },
+    "userId": "650da368c5b4c7277cf7be5d",
+    "category": "🐕 Pets",
+    "date": {
+      "$date": "2022-11-19T00:00:00.000Z"
+    },
+    "tag": "Pet Cleaning",
+    "type": "Expense",
+    "value": 3000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a738"
+    },
+    "userId": "650da43841ae2ac0764aaea7",
+    "category": "🐕 Pets",
+    "date": {
+      "$date": "2023-02-13T00:00:00.000Z"
+    },
+    "tag": "Pet Cleaning",
+    "type": "Expense",
+    "value": 1000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73a"
+    },
+    "userId": "650da46829fa8e0e5bce2c8d",
+    "category": "🐕 Pets",
+    "date": {
+      "$date": "2023-02-13T00:00:00.000Z"
+    },
+    "tag": "Pet cleaning",
+    "type": "Expense",
+    "value": 1000,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a739"
+    },
+    "userId": "650da3fbdd38e8c95aae194f",
+    "category": "🚗 Car",
+    "date": {
+      "$date": "2023-01-25T00:00:00.000Z"
+    },
+    "tag": "Car Maintance",
+    "type": "Expense",
+    "value": 800,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73b"
+    },
+    "userId": "650da43841ae2ac0764aaea7",
+    "category": "🦋 Beauty",
+    "date": {
+      "$date": "2023-09-01T00:00:00.000Z"
+    },
+    "tag": "Nail Salon",
+    "type": "Expense",
+    "value": 450,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73c"
+    },
+    "userId": "650da46829fa8e0e5bce2c8d",
+    "category": "🍽️ Eating Out",
+    "date": {
+      "$date": "2023-06-10T00:00:00.000Z"
+    },
+    "tag": "McDonald",
+    "type": "Expense",
+    "value": 50,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73d"
+    },
+    "userId": "650da495691e20c6e1111c72",
+    "category": "🏡 Home",
+    "date": {
+      "$date": "2023-06-20T00:00:00.000Z"
+    },
+    "tag": "Temu",
+    "type": "Expense",
+    "value": 150,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73e"
+    },
+    "userId": "650da3fbdd38e8c95aae194f",
+    "category": "🍽️ Eating Out",
+    "date": {
+      "$date": "2023-04-28T00:00:00.000Z"
+    },
+    "tag": "Pizza Hut",
+    "type": "Expense",
+    "value": 500,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a73f"
+    },
+    "userId": "650da43841ae2ac0764aaea7",
+    "category": "🛍️ Clothing & Shoes",
+    "date": {
+      "$date": "2023-08-30T00:00:00.000Z"
+    },
+    "tag": "Shein",
+    "type": "Expense",
+    "value": 350,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a737"
+    },
+    "userId": "650da46829fa8e0e5bce2c8d",
+    "category": "🚗 Car",
+    "date": {
+      "$date": "2023-06-25T00:00:00.000Z"
+    },
+    "tag": "Car Maintance",
+    "type": "Expense",
+    "value": 800,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082226da7bcd3e74e7a736"
+    },
+    "userId": "650da495691e20c6e1111c72",
+    "category": "🍽️ Eating Out",
+    "date": {
+      "$date": "2023-03-02T00:00:00.000Z"
+    },
+    "tag": "Mcdonald",
+    "type": "Expense",
+    "value": 320,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082569d1519ccbf87cbeb7"
+    },
+    "userId": "650da368c5b4c7277cf7be5d",
+    "category": "🚗 Car",
+    "date": {
+      "$date": "2023-07-02T00:00:00.000Z"
+    },
+    "tag": "Petrol",
+    "type": "Expense",
+    "value": 70,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082594d1519ccbf87cbeb9"
+    },
+    "userId": "650da495691e20c6e1111c72",
+    "category": "🛍️ Clothing & Shoes",
+    "date": {
+      "$date": "2023-07-02T00:00:00.000Z"
+    },
+    "tag": "Cotton On",
+    "type": "Expense",
+    "value": 210,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650825e8d1519ccbf87cbebc"
+    },
+    "userId": "650da368c5b4c7277cf7be5d",
+    "category": "🍽️ Eating Out",
+    "date": {
+      "$date": "2023-07-02T00:00:00.000Z"
+    },
+    "tag": "Bubble Tea",
+    "type": "Expense",
+    "value": 15,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65082621d1519ccbf87cbebe"
+    },
+    "userId": "650da3fbdd38e8c95aae194f",
+    "category": "🚞 Transport",
+    "date": {
+      "$date": "2023-07-02T00:00:00.000Z"
+    },
+    "tag": "Express Train Ticket",
+    "type": "Expense",
+    "value": 22,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650a7c964bf6240e312c6257"
+    },
+    "userId": "650da495691e20c6e1111c72",
+    "category": "🚞 Transport",
+    "date": {
+      "$date": "2023-03-02T00:00:00.000Z"
+    },
+    "tag": "Bus",
+    "type": "Expense",
+    "value": 30,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650a7d3d94a0d8ecd2267b4d"
+    },
+    "userId": "650da43841ae2ac0764aaea7",
+    "category": "🎞️ Entertainment",
+    "date": {
+      "$date": "2023-08-02T00:00:00.000Z"
+    },
+    "tag": "Ice Skating",
+    "type": "Expense",
+    "value": 70,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650a7dbe3975c7283356d230"
+    },
+    "userId": "650da368c5b4c7277cf7be5d",
+    "category": "🎞️ Entertainment",
+    "date": {
+      "$date": "2023-04-24T00:00:00.000Z"
+    },
+    "tag": "Movie Night",
+    "type": "Expense",
+    "value": 35,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650a7e88bd61f4f2af0dc419"
+    },
+    "userId": "650da368c5b4c7277cf7be5d",
+    "category": "🧳 Travel",
+    "date": {
+      "$date": "2023-01-20T00:00:00.000Z"
+    },
+    "tag": "Sydney Plane Ticket",
+    "type": "Expense",
+    "value": 650,
+    "slug": "travel",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "650a8dd68bac310c269b1c27"
+    },
+    "userId": "650da46829fa8e0e5bce2c8d",
+    "category": "🎁 Gift",
+    "date": {
+      "$date": "2023-08-30T00:00:00.000Z"
+    },
+    "tag": "Sean's Birthday Gift",
+    "type": "Expense",
+    "value": 120,
+    "slug": "gift",
+    "__v": 0
+  }
+]

@@ -4,6 +4,13 @@ const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
 // 2)ROUTE HANDLERS
+exports.getAllUserTransactions = catchAsync(async (req, res) => {
+  //TODO
+  res.status(200).json({
+    status: 'Hello World',
+  });
+});
+
 exports.getAllTransactions = catchAsync(async (req, res) => {
   //Execute Query
   const features = new APIFeatures(Transaction.find(), req.query)

@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
-const transactionRouter = require('./routes/transactionRoutes');
+const adminRouter = require('./routes/adminRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 // 2)Mounting Routers - routes file
-app.use('/api/v1/transactions', transactionRouter);
+app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/users', userRouter);
 
 // 4)Error Handling

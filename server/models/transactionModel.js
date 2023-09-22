@@ -3,6 +3,7 @@ const slugify = require('slugify');
 
 //Schema
 const transactionSchema = new mongoose.Schema({
+  userId: String,
   category: {
     type: String,
     default: '💡 Uncategorized',
