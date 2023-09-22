@@ -10,14 +10,21 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.route('/').post(userController.createUser);
 
 router
   .route('/transaction')
-  .get(authController.protect, transactionController.getAllTransactions)
-  .patch(authController.protect, transactionController.updateTransaction)
-  .delete(authController.protect, transactionController.deleteTransaction)
+  .get(
+    authController.protect,
+    authController.restrictTo('user'),
+    transactionController.getAllTransactions,
+  )
   .post(authController.protect, transactionController.createTransaction);
+
+router
+  .route('/transaction/:id')
+  .get(authController.protect, transactionController.getTransaction)
+  .patch(authController.protect, transactionController.updateTransaction)
+  .delete(authController.protect, transactionController.deleteTransaction);
 
 router
   .route('/transaction/stats/:year')

@@ -4,16 +4,17 @@ const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
 // 2)ROUTE HANDLERS
-exports.getAllUserTransactions = catchAsync(async (req, res) => {
-  //TODO
-  res.status(200).json({
-    status: 'Hello World',
-  });
-});
 
 exports.getAllTransactions = catchAsync(async (req, res) => {
   //Execute Query
-  const features = new APIFeatures(Transaction.find(), req.query)
+  console.log(req.user.id);
+  let query;
+  if (req.user.role === 'user') {
+    query = { userId: req.user.id };
+  } else if (req.user.role === 'admin') {
+    query = {};
+  }
+  const features = new APIFeatures(Transaction.find(query), req.query)
     .filter()
     .filterByDate()
     .sort()
@@ -49,7 +50,14 @@ exports.getTransaction = catchAsync(async (req, res, next) => {
 });
 
 exports.createTransaction = catchAsync(async (req, res, next) => {
-  const newTransaction = await Transaction.create(req.body);
+  const newTransaction = await Transaction.create({
+    category: req.body.category,
+    date: req.body.date,
+    tag: req.body.tag,
+    type: req.body.type,
+    value: req.body.value,
+    userId: req.user.id,
+  });
 
   res.status(201).json({
     status: 'success',
@@ -102,6 +110,7 @@ exports.getTransactionsStats = catchAsync(async (req, res, next) => {
   end.setMonth(start.getMonth() + (month ? 1 : 12));
   console.log(month, start, end);
   const stats = await Transaction.aggregate([
+    { $match: { userId: req.user.id } },
     { $match: { type: 'Expense' } },
     {
       $match: {
@@ -113,7 +122,7 @@ exports.getTransactionsStats = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        _id: { type: '$type', category: '$category' },
+        _id: { type: '$type', category: '$category', userId: '$userId' },
         numTransactions: { $sum: 1 },
         sumValue: { $sum: '$value' },
         date: { $push: '$date' },

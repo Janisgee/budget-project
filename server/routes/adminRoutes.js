@@ -7,14 +7,36 @@ const transactionController = require('../controllers/transactionController');
 const router = express.Router();
 
 router
-  .route('/transaction')
-  .get(authController.protect, transactionController.getAllUserTransactions);
-
-router.route('/user').get(userController.getAllUsers);
+  .route('/transactions')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    transactionController.getAllTransactions,
+  );
 
 router
-  .route('/user/:userId')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .route('/users')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.getAllUsers,
+  );
+
+router
+  .route('/users/:id')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.getUser,
+  )
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.updateUser, //TODO
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.deleteUser,
+  );
 module.exports = router;
