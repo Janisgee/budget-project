@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
       validator: function (value) {
         return value === this.password;
       },
-      message: 'PasswordConfirm must be same as password.',
+      message: 'Password confirm must be same as password.',
     },
   },
   accountCreateAt: { type: Date, default: new Date().toISOString() },
@@ -41,9 +41,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.pre(/^findByIdAndUpdate/, async function (next) {
+userSchema.pre(/\bfindByIdAndUpdate\b/, async function (next) {
   //TODO
   if (!this.isModified('password')) return next();
+
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   this.passwordChangedAt = new Date();

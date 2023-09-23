@@ -10,6 +10,12 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.delete(
+  '/deleteAccount',
+  authController.protect,
+  authController.restrictTo('user'),
+  userController.deleteUser,
+);
 
 router
   .route('/transaction')
