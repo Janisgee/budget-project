@@ -22,7 +22,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   // console.log('Hello from middleware😁😁😁😁');
   req.requestTime = new Date().toISOString();
-  console.log(req.headers);
+  // console.log(req.headers);
   next();
 });
 
