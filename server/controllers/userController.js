@@ -3,6 +3,14 @@ const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+const filteredObj = (obj, ...allowedObject) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedObject.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
 // 2)ROUTE HANDLERS
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(User.find(), req.query)
@@ -41,6 +49,32 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateMe = catchAsync(async (req, res, next) => {
+  //Create Error if password is in the field
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new AppError(
+        'This route is not for updating password. Please go to /updatePassword to do this action.',
+        400,
+      ),
+    );
+  }
+  //Filtered the unwanted fields except 'name' & 'email'
+  const filteredBody = filteredObj(req.body, 'email', 'name');
+
+  //Update the field
+  const newUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  //Response from server
+  res.status(200).json({
+    status: 'success',
+    user: newUser,
+  });
+});
+
 exports.updateUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     //TODO
@@ -74,11 +108,14 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   } else if (req.user.role === 'admin') {
     query = {};
   }
-  const user = await User.findByIdAndDelete(query);
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
+  const user = await User.findByIdAndUpdate(
+    query,
+    { active: false },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 
   res.status(204).json({
     status: 'success',
