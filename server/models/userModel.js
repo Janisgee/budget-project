@@ -37,6 +37,8 @@ const userSchema = new mongoose.Schema({
   active: { type: Boolean, default: true, select: false },
 });
 
+userSchema.index({ role: 1, email: 1 });
+
 userSchema.pre('save', async function (next) {
   //TODO
   if (!this.isModified('password') || this.isNew) return next();

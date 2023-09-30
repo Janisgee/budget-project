@@ -44,6 +44,10 @@ const transactionSchema = new mongoose.Schema({
   },
 });
 
+//index for transaction model
+transactionSchema.index({ userId: 1 });
+transactionSchema.index({ date: -1, slug: 1 });
+
 //DOCUMENT MIDDLEWARE
 transactionSchema.pre('save', function (next) {
   console.log('Pre Schema');

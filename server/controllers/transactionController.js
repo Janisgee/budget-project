@@ -5,9 +5,14 @@ const catchAsync = require('./../utils/catchAsync');
 
 // 2)ROUTE HANDLERS
 
+exports.setUserParams = (req, res, next) => {
+  req.user.id = req.params.userId;
+  next();
+};
+
 exports.getAllTransactions = catchAsync(async (req, res) => {
   //Execute Query
-  console.log(req.user.id);
+  console.log(req.user.role);
   let query;
   if (req.user.role === 'user') {
     query = { userId: req.user.id };
@@ -20,7 +25,7 @@ exports.getAllTransactions = catchAsync(async (req, res) => {
     .sort()
     .limitFields()
     .paginate();
-  // console.log('features', features, '😁😁😁');
+
   const transactions = await features.exec();
 
   // const transactions = await query;

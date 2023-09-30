@@ -75,40 +75,14 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(
-    //TODO
-    req.params.id,
-    {
-      name: req.body.name,
-      email: req.body.email,
-      oldPassword: req.body.oldPassword,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-      passwordChangedAt: new Date(),
-    },
-    { new: true, runValidators: true },
-  );
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
-});
-
 exports.deleteUser = catchAsync(async (req, res, next) => {
   let query;
   if (req.user.role === 'user') {
     query = req.user.id;
   } else if (req.user.role === 'admin') {
-    query = {};
+    query = req.params.id;
   }
-  const user = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     query,
     { active: false },
     {
