@@ -1,9 +1,13 @@
 .overview-container {
   background-color: rgb(231, 231, 231);
   margin: 0;
+  padding: 2vh 7vw;
 }
-.overview-container.container {
-  padding: 10vh 5vw;
+
+.overview-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .overview-content {
