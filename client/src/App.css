@@ -1,0 +1,13 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+}
+
+.navbar {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 2rem;
+}
