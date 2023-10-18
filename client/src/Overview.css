@@ -2,3 +2,37 @@
   background-color: rgb(231, 231, 231);
   margin: 0;
 }
+.overview-container.container {
+  padding: 10vh 5vw;
+}
+
+.overview-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.overview-content.list-items {
+  width: 35%;
+  padding: 0;
+}
+
+.overview-content li.list {
+  list-style: none;
+  border-radius: 1rem;
+  padding: 3vh 1vw;
+  background-color: white;
+  width: 20vw;
+  margin-bottom: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.overview-content li h4 {
+  margin: 0;
+  display: inline;
+}
+.overview-content li p {
+  margin: 0;
+  display: inline;
+}
