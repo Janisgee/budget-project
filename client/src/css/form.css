@@ -1,0 +1,19 @@
+.form {
+  background-color: #555454;
+  border-radius: 7px;
+  padding: 2rem 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: white;
+
+  width: 20rem;
+  margin: 6rem auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

@@ -1,6 +1,6 @@
 import './css/btn.css';
 
-export default function NavBar() {
+export default function navBar() {
   return (
     <nav className="navbar">
       <div className="logo">💰Money Tracker</div>

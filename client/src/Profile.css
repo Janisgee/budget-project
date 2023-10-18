@@ -1,0 +1,14 @@
+.profile-container {
+  margin: 3vh 2vw;
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.profile img {
+  border-radius: 100%;
+  height: 4rem;
+}
