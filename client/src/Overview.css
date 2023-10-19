@@ -1,13 +1,16 @@
 .overview-container {
-  background-color: rgb(231, 231, 231);
   margin: 0;
   padding: 2vh 7vw;
 }
 
 .overview-heading {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  margin: 2vh 0;
+}
+
+.overview-heading p {
+  display: inline;
+  margin-right: 2vh;
 }
 
 .overview-content {
@@ -15,9 +18,11 @@
   flex-direction: row;
 }
 
-.overview-content.list-items {
-  width: 35%;
+.overview-content .list-items {
+  width: 45%;
   padding: 0;
+  height: 68vh;
+  overflow: auto;
 }
 
 .overview-content li.list {
@@ -27,8 +32,6 @@
   background-color: white;
   width: 20vw;
   margin-bottom: 5vh;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 

@@ -1,0 +1,15 @@
+.each-transactions {
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.each-transaction-total {
+  background-color: grey;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.5vh 0.5vw;
+}
+
+.each-transaction-title {
+  margin-right: 1rem;
+}

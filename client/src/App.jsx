@@ -4,7 +4,8 @@ import './App.css';
 // import SignUp from './SignUp';
 // import NavBar from './NavBar.js';
 
-import Overview from './Overview.jsx';
+import Transaction from './Transaction.jsx';
+// import Overview from './Overview.jsx';
 import LoginNavBar from './LoginNavBar';
 import Profile from './Profile';
 
@@ -19,7 +20,8 @@ function App() {
       <div className="walletPage">
         <div className="wallet-child-1">
           <LoginNavBar />
-          <Overview />
+          {/* <Overview /> */}
+          <Transaction />
         </div>
         <div className="wallet-child-2">
           <Profile />

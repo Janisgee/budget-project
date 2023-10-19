@@ -1,0 +1,44 @@
+.transaction h3 {
+  display: inline;
+  margin-right: 1rem;
+}
+
+.transaction-container {
+  margin: 0;
+  padding: 2vh 7vw;
+}
+
+.transaction-heading .all-balance {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.bal {
+  height: 12vh;
+  width: 27vh;
+  background-color: white;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.balance-title {
+  font-weight: 700;
+  color: blueviolet;
+}
+
+.transaction-content {
+  margin-top: 1rem;
+}
+.transaction-content-heading {
+  margin-right: 2rem;
+}
+.eachDateTransaction-group {
+  background-color: transparent;
+  height: 54vh;
+  overflow: auto;
+}

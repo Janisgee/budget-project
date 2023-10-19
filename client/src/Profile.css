@@ -20,8 +20,6 @@
   list-style: none;
   border-radius: 1rem;
   background-color: white;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 

@@ -2,7 +2,7 @@ import './css/btn.css';
 
 export default function navBar() {
   return (
-    <nav className="navbar">
+    <nav className="navbar flex-space-between">
       <div className="logo">💰Money Tracker</div>
       <div className="btn-group">
         <button className="btn btn-login">Login</button>
