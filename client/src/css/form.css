@@ -17,3 +17,19 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.form-transaction {
+  border-radius: 1rem;
+}
+
+.form-transaction div {
+  margin-bottom: 1rem;
+}
+
+.form-transaction label {
+  display: block;
+}
+
+.form-transaction select {
+  height: 1.4rem;
+}

@@ -31,3 +31,9 @@
   margin: 0;
   display: inline;
 }
+
+.form-add-transaction {
+  margin-top: 2rem;
+  padding: 2rem 1rem;
+  border: solid;
+}

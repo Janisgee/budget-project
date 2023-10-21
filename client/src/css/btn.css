@@ -42,3 +42,19 @@
 .active {
   color: rgb(66, 66, 66);
 }
+
+.btn-red {
+  background-color: rgb(235, 89, 89);
+}
+
+.btn-red:hover {
+  background-color: red;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+}
+.closeButton:hover {
+  cursor: pointer;
+}

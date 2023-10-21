@@ -31,14 +31,58 @@
   color: blueviolet;
 }
 
+.eachDateTransaction-group {
+  background-color: transparent;
+  height: 54vh;
+  overflow: auto;
+}
+
+.transaction-modal {
+  display: none;
+  position: fixed;
+  padding-top: 10%;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.transaction-modal-content {
+  display: none;
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 20rem;
+}
+.transaction-modal-content span {
+  font-size: 2rem;
+  color: blueviolet;
+}
+
 .transaction-content {
   margin-top: 1rem;
 }
 .transaction-content-heading {
   margin-right: 2rem;
 }
-.eachDateTransaction-group {
-  background-color: transparent;
-  height: 54vh;
-  overflow: auto;
+
+.confirm-delete-modal {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.confirm-delete div {
+  display: none;
+  background-color: #fefefe;
+  border-radius: 1rem;
+  text-align: center;
+  padding: 2rem;
+  margin: 0 auto;
+  width: 36rem;
+}
+.confirm-delete button {
+  margin: 1rem 1rem 0rem;
 }

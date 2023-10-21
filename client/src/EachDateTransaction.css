@@ -13,3 +13,18 @@
 .each-transaction-title {
   margin-right: 1rem;
 }
+
+.each-transaction-select {
+  text-decoration: none;
+  color: black;
+}
+
+.each-transaction-select :hover {
+  background-color: rgb(187, 186, 186);
+  color: white;
+}
+
+.each-transaction-select :visited,
+.each-transaction-select :focus {
+  color: black;
+}
