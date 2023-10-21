@@ -1,4 +1,5 @@
 import './Profile.css';
+import './css/form.css';
 
 export default function Profile() {
   return (
@@ -22,18 +23,39 @@ export default function Profile() {
         </li>
       </ul> */}
       <button className="btn">Add Transaction</button>
-      <form action="" method="get" class="form-newTransaction">
-        <div class="newTransaction-name">
-          <label for="name">Enter your name: </label>
-          <input type="text" name="name" id="name" required />
+      <form
+        action=""
+        method="get"
+        class="form-transaction form-add-transaction"
+      >
+        <div>
+          <label for="type">Type: </label>
+          <select name="type" id="type" required>
+            <option value="">--Please choose a type</option>
+            <option vallue="income">Income</option>
+            <option vallue="expense">Expense</option>
+          </select>
         </div>
-        <div class="form-example">
-          <label for="email">Enter your email: </label>
-          <input type="email" name="email" id="email" required />
+        <div>
+          <label for="value">Value: </label>
+          <input type="number" id="value" placeholder="amount" />
         </div>
-        <div class="form-example">
-          <input type="submit" value="Subscribe!" />
+        <div>
+          <label for="category">Category: </label>
+          <select name="category" id="category" required>
+            <option value="">--Please choose a category</option>
+            <option vallue=""></option>
+          </select>
         </div>
+        <div>
+          <label for="date">Date: </label>
+          <input type="date" name="date" id="date" required />
+        </div>
+        <div>
+          <label for="tag">Tag: </label>
+          <input type="tag" id="tag" placeholder="note" />
+        </div>
+        <button className="btn">Submit</button>
       </form>
     </div>
   );
