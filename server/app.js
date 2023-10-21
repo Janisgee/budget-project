@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -17,6 +18,7 @@ const app = express();
 // 1)MIDDLEWARES
 //Middleware to helps secure Express apps by setting HTTP response headers
 app.use(helmet());
+app.use(cors());
 
 //Middleware to allow us to see request data in console and limited access with only environment = development
 console.log(process.env.NODE_ENV);
