@@ -8,16 +8,18 @@ export default function EachDateTransaction() {
         <div className="each-transaction-total">+$98</div>
       </div>
       <hr />
-      <div className="flex-space-between ">
-        <div>
-          <span className="each-transaction-title strong-font">
-            🍽️ Eating Out
-          </span>
-          <span>🏷️</span>
-          <span>Moe's Tavern</span>
+      <a href="" className="each-transaction-select">
+        <div className="flex-space-between ">
+          <div>
+            <span className="each-transaction-title strong-font">
+              🍽️ Eating Out
+            </span>
+            <span>🏷️</span>
+            <span>Moe's Tavern</span>
+          </div>
+          <div>-AUD 35.60</div>
         </div>
-        <div>-AUD 35.60</div>
-      </div>
+      </a>
       <div className="flex-space-between ">
         <div>
           <span className="each-transaction-title strong-font">
