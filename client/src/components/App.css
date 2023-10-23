@@ -19,6 +19,14 @@ h2 {
   margin: 0;
 }
 
+.link {
+  text-decoration: none;
+}
+
+.specialWord {
+  color: red;
+}
+
 .flex-space-between {
   display: flex;
   justify-content: space-between;
@@ -27,6 +35,11 @@ h2 {
 
 .strong-font {
   font-weight: 600;
+}
+
+.logo {
+  font-size: 2rem;
+  color: white;
 }
 
 .walletPage {
@@ -52,19 +65,40 @@ h2 {
   font-size: 2rem;
 }
 
-.loginNavbar {
+.navBarAfterLogin {
   background-color: rgb(197, 196, 196);
   color: white;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  font-size: 2rem;
 }
 
 .container {
-  padding: 15vh 10vw;
+  padding: 0vh 10vw;
 }
 
 .main-container {
   text-align: center;
+}
+
+.alert {
+  position: fixed;
+  top: 4.65rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1.6rem 10rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.alert--success {
+  background-color: #20bf6b;
+}
+.alert--error {
+  background-color: #eb4d4b;
 }
