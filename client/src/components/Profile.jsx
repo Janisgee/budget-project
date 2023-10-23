@@ -26,10 +26,10 @@ export default function Profile() {
       <form
         action=""
         method="get"
-        class="form-transaction form-add-transaction"
+        className="form-transaction form-add-transaction"
       >
         <div>
-          <label for="type">Type: </label>
+          <label htmlFor="type">Type: </label>
           <select name="type" id="type" required>
             <option value="">--Please choose a type</option>
             <option vallue="income">Income</option>
@@ -37,22 +37,22 @@ export default function Profile() {
           </select>
         </div>
         <div>
-          <label for="value">Value: </label>
+          <label htmlFor="value">Value: </label>
           <input type="number" id="value" placeholder="amount" />
         </div>
         <div>
-          <label for="category">Category: </label>
+          <label htmlFor="category">Category: </label>
           <select name="category" id="category" required>
             <option value="">--Please choose a category</option>
             <option vallue=""></option>
           </select>
         </div>
         <div>
-          <label for="date">Date: </label>
+          <label htmlFor="date">Date: </label>
           <input type="date" name="date" id="date" required />
         </div>
         <div>
-          <label for="tag">Tag: </label>
+          <label htmlFor="tag">Tag: </label>
           <input type="tag" id="tag" placeholder="note" />
         </div>
         <button className="btn">Submit</button>

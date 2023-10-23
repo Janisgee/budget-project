@@ -3,8 +3,8 @@ import './Overview.css';
 
 export default function Overview() {
   return (
-    <div className="overview-container flex-space-between">
-      <div className="overview-heading">
+    <div className="overview-container ">
+      <div className="overview-heading flex-space-between">
         <div id="sort-by-button">
           <p>Balance on</p>
           <select name="overview-sort-by-month" className="btn" id="sort-by">
