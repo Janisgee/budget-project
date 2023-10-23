@@ -1,3 +1,5 @@
+import { showAlert } from '../js/alerts';
+
 let token;
 let userId;
 
@@ -18,8 +20,14 @@ export async function doLogin(email, password) {
     const body = await response.json();
     token = body.token;
     userId = body.data.user._id;
+    showAlert('success', 'Logged in successfully!');
   } else {
-    throw new Error('no');
+    throw new Error(
+      showAlert(
+        'error',
+        'Log in fail. Please fill in a valid email and password!'
+      )
+    );
   }
 }
 

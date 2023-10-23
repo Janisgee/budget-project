@@ -1,12 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import './css/form.css';
-import { doLogin, isLoggedIn } from '../api-service';
+import { doLogin, isLoggedIn } from '../js/api-service';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const formRef = useRef();
   const navigate = useNavigate();
-  const [error, setError] = useState('');
 
   async function submit(event) {
     event.preventDefault();
@@ -19,19 +18,20 @@ export default function Login() {
 
     try {
       await doLogin(email, password);
-    } catch (e) {
-      setError(e.message);
+      if (isLoggedIn()) {
+        window.setTimeout(() => {
+          navigate('/user/overview');
+        }, 2000);
+      }
+    } catch (err) {
       formRef.current.reset();
-    }
-
-    if (isLoggedIn()) {
-      navigate('/');
     }
   }
 
   return (
     <div className="container">
       <form ref={formRef} className="form" onSubmit={submit}>
+        {/* <div className="alert alert--success">Successfully login</div> */}
         <h2>🔐 Log In</h2>
         <div className="row">
           <label htmlFor="email">Email address</label>
@@ -47,7 +47,6 @@ export default function Login() {
           <button className="btn">Login</button>
         </div>
       </form>
-      {error && <div>Error: {error}</div>}
     </div>
   );
 }
