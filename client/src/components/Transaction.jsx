@@ -10,7 +10,7 @@ export default function Transaction() {
           <form
             action=""
             method="get"
-            class="form-transaction transaction-modal-content"
+            className="form-transaction transaction-modal-content"
           >
             <div className="flex-space-between">
               <span>Edit Transaction</span>
@@ -19,7 +19,7 @@ export default function Transaction() {
               </button>
             </div>
             <div>
-              <label for="type">Type: </label>
+              <label htmlFor="type">Type: </label>
               <select name="type" id="type" required>
                 <option value="">--Please choose a type</option>
                 <option vallue="income">Income</option>
@@ -27,22 +27,22 @@ export default function Transaction() {
               </select>
             </div>
             <div>
-              <label for="value">Value: </label>
+              <label htmlFor="value">Value: </label>
               <input type="number" id="value" placeholder="amount" />
             </div>
             <div>
-              <label for="category">Category: </label>
+              <label htmlFor="category">Category: </label>
               <select name="category" id="category" required>
                 <option value="">--Please choose a category</option>
-                <option vallue=""></option>
+                <option value=""></option>
               </select>
             </div>
             <div>
-              <label for="date">Date: </label>
+              <label htmlFor="date">Date: </label>
               <input type="date" name="date" id="date" required />
             </div>
             <div>
-              <label for="tag">Tag: </label>
+              <label htmlFor="tag">Tag: </label>
               <input type="tag" id="tag" placeholder="note" />
             </div>
             <div className="flex-space-between">
