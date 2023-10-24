@@ -11,13 +11,13 @@ export default function SignUp() {
         </div>
 
         <div className="row">
-          <label htmlFor="email">Email address</label>
-          <input type="text" id="email" />
+          <label htmlFor="sign-up-email">Email address</label>
+          <input type="text" id="sign-up-email" />
         </div>
 
         <div className="row">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" />
+          <label htmlFor="sign-up-password">Password</label>
+          <input type="password" id="sign-up-password" />
         </div>
 
         <div className="row">

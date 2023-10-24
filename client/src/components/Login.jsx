@@ -35,12 +35,26 @@ export default function Login() {
         <h2>🔐 Log In</h2>
         <div className="row">
           <label htmlFor="email">Email address</label>
-          <input type="text" name="email" />
+          <input
+            type="text"
+            name="email"
+            id="email"
+            autoComplete="on"
+            value="user1@gmail.com"
+            onChange={(e) => e.target.value}
+          />
         </div>
 
         <div className="row">
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            autoComplete="on"
+            value="pass1234"
+            onChange={(e) => e.target.value}
+          />
         </div>
 
         <div>
