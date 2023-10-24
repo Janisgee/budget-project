@@ -21,6 +21,7 @@ export async function doLogin(email, password) {
     token = body.token;
     userId = body.data.user._id;
     showAlert('success', 'Logged in successfully!');
+    getAllTransactions();
   } else {
     throw new Error(
       showAlert(
@@ -31,12 +32,27 @@ export async function doLogin(email, password) {
   }
 }
 
-export function getAllTransactions() {
-  return fetch(`http://localhost:3000/api/v1/users/${userId}/transaction`, {
+export async function getAllTransactions(start = undefined, end = undefined) {
+  let url;
+  if (start === undefined && end === undefined) {
+    url = `http://localhost:3000/api/v1/users/${userId}/transaction`;
+  } else {
+    url = `http://localhost:3000/api/v1/users/${userId}/transaction?start=${start}&end=${end}`;
+  }
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     },
-  }).then((data) => data.json());
+  });
+
+  if (response.status === 200) {
+    const data = await response.json();
+
+    return data.data.transactions;
+  } else {
+    throw new Error('Fail to get transactions.');
+  }
 }
