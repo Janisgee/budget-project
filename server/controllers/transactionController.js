@@ -107,31 +107,32 @@ exports.deleteTransaction = catchAsync(async (req, res, next) => {
 });
 
 exports.getTransactionsStats = catchAsync(async (req, res, next) => {
-  const year = req.params.year * 1;
-  const month = req.params.month * 1;
-  const start = new Date(Date.UTC(year, month ? month - 1 : 0));
+  const type = req.query.type;
 
-  const end = new Date(start);
-  end.setMonth(start.getMonth() + (month ? 1 : 12));
-  console.log(month, start, end);
-  const stats = await Transaction.aggregate([
-    { $match: { userId: req.user.id } },
-    { $match: { type: 'Expense' } },
-    {
+  const query = [];
+
+  if (req.query.start && req.query.end) {
+    const start = new Date(req.query.start);
+    const end = new Date(req.query.end);
+    query.push({
       $match: {
         date: {
           $gte: start,
           $lt: end,
         },
       },
-    },
+    });
+  }
+
+  const stats = await Transaction.aggregate([
+    ...query,
+    { $match: { userId: req.user.id } },
+    { $match: { type } },
     {
       $group: {
-        _id: { type: '$type', category: '$category', userId: '$userId' },
-        numTransactions: { $sum: 1 },
+        _id: { category: '$category' },
+        numTransactions: { $count: {} },
         sumValue: { $sum: '$value' },
-        date: { $push: '$date' },
-        value: { $push: '$value' },
       },
     },
   ]);

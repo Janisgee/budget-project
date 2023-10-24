@@ -15,14 +15,12 @@ router
   .get(transactionController.getAllTransactions)
   .post(transactionController.createTransaction);
 
+router.route('/stats').get(transactionController.getTransactionsStats);
+
 router
   .route('/:id')
   .get(transactionController.getTransaction)
   .patch(transactionController.updateTransaction)
   .delete(transactionController.deleteTransaction);
-
-router.route('/stats/:year').get(transactionController.getTransactionsStats);
-
-router.route('/:year/:month').get(transactionController.getTransactionsStats);
 
 module.exports = router;

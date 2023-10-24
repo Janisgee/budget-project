@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import PieChart from './PieChart';
 import './Overview.css';
-import { getAllTransactions } from '../js/api-service';
+import { getAllTransactions, getTransactionStats } from '../js/api-service';
 
 export default function Overview() {
   const [transactions, setTransactions] = useState([]);
-  const [categoryTrans, setCategoryTrans] = useState([]);
+  const [transactionStats, setTransactionStats] = useState([]);
+  const [selectedType, setSelectedType] = useState('Expense');
   const [selectedMonth, setSelectedMonth] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  console.log(startDate);
-  console.log(endDate);
-  console.log(transactions);
 
   //Get unique month that have transactions
   const uniqueTransactionMonth = [];
@@ -23,7 +21,9 @@ export default function Overview() {
   });
 
   //handle displaying Income or Expense
-  function handleDisplayType() {}
+  function handleTypeFilter(e) {
+    setSelectedType(e.target.value);
+  }
 
   //Get unique array of category and value for the month
 
@@ -42,29 +42,34 @@ export default function Overview() {
     } else {
       const start = e.target.value;
       setSelectedMonth(start);
-      console.log(start);
+
       const startDate = new Date(start);
       const endDate = new Date(startDate);
       endDate.setMonth(startDate.getMonth() + 1);
       setStartDate(startDate);
       setEndDate(endDate);
-      console.log(startDate);
-      console.log(endDate);
     }
   }
 
   useEffect(() => {
     async function fetchTransactions() {
-      const allTransactions = await getAllTransactions(startDate, endDate);
-      if (startDate === undefined && endDate === undefined) {
-        setCategoryTrans([]);
-        setTransactions(allTransactions);
-      } else {
-        setCategoryTrans(allTransactions);
-      }
+      const allTransactions = await getAllTransactions();
+      setTransactions(allTransactions);
     }
     fetchTransactions();
-  }, [startDate, endDate]);
+  }, []);
+
+  useEffect(() => {
+    async function fetchTransactionStats() {
+      const transactionStats = await getTransactionStats(
+        startDate,
+        endDate,
+        selectedType
+      );
+      setTransactionStats(transactionStats);
+    }
+    fetchTransactionStats();
+  }, [startDate, endDate, selectedType]);
 
   return (
     <div className="overview-container ">
@@ -84,13 +89,14 @@ export default function Overview() {
           </select>
         </div>
         <div className="sort-by-button">
-          <select name="overview-sort-by-type" className="btn">
-            <option value="Income" onClick={handleDisplayType}>
-              Income
-            </option>
-            <option value="Expense" onClick={handleDisplayType}>
-              Expense
-            </option>
+          <select
+            value={selectedType}
+            name="overview-sort-by-type"
+            className="btn"
+            onChange={handleTypeFilter}
+          >
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
           </select>
         </div>
       </div>
@@ -98,19 +104,18 @@ export default function Overview() {
         <PieChart />
 
         <ul className="list-items">
-          {(categoryTrans.length > 0 ? categoryTrans : transactions).map(
-            (trans) => {
-              return (
-                <li className="list flex-space-between" key={trans._id}>
-                  <h4>{trans.category}</h4>
-                  <p>
-                    {trans.type === 'Income' ? '$' : '-$'}
-                    {trans.value}
-                  </p>
-                </li>
-              );
-            }
-          )}
+          {transactionStats.map((trans) => {
+            console.log(trans._id.category);
+            return (
+              <li className="list flex-space-between" key={trans._id.category}>
+                <h4>{trans._id.category}</h4>
+                <p>
+                  {selectedType === 'Income' ? '$' : '-$'}
+                  {trans.sumValue}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
