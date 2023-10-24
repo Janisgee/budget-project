@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import './css/btn.css';
 import { Link } from 'react-router-dom';
 
-export default function NavBarAfterLogin() {
-  const [toggle, setToggle] = useState(false);
-
+export default function NavBarAfterLogin({ toggle, ontoggle }) {
   const handleToggleChange = () => {
-    setToggle(!toggle);
+    ontoggle(!toggle);
   };
   return (
     <nav className="navBarAfterLogin">
