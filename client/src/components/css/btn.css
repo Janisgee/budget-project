@@ -41,6 +41,7 @@
 
 .active {
   color: rgb(66, 66, 66);
+  font-weight: 600;
 }
 
 .btn-red {
