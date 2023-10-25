@@ -8,7 +8,7 @@ import Profile from './Profile';
 import { TransactionProvider } from '../contexts/transactionContext';
 
 function AppAfterLogin() {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   return (
     <TransactionProvider>
