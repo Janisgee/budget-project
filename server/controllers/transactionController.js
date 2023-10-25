@@ -124,13 +124,16 @@ exports.getTransactionsStats = catchAsync(async (req, res, next) => {
     });
   }
 
+  if (req.query.type) {
+    query.push({ $match: { type } });
+  }
+
   const stats = await Transaction.aggregate([
     ...query,
     { $match: { userId: req.user.id } },
-    { $match: { type } },
     {
       $group: {
-        _id: { category: '$category' },
+        _id: { category: '$category', type: '$type' },
         numTransactions: { $count: {} },
         sumValue: { $sum: '$value' },
       },

@@ -2,8 +2,25 @@ import { useState } from 'react';
 import './Profile.css';
 import './css/form.css';
 
+import { useTransaction } from '../contexts/transactionContext';
+
 export default function Profile({ toggle }) {
+  const { transactions, transactionSummary } = useTransaction();
   const [addNewTransaction, setAddNewTransaction] = useState(false);
+
+  const allTransactionBalance = transactions
+    .map((el) => (el.type === 'Expense' ? -el.value : el.value))
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const expenseSum = transactionSummary
+    .filter((el) => el._id.type === 'Expense')
+    .map((el) => el.sumValue)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const incomeSum = transactionSummary
+    .filter((el) => el._id.type === 'Income')
+    .map((el) => el.sumValue)
+    .reduce((acc, cur) => acc + cur, 0);
 
   function handleAddNewTransaction() {
     setAddNewTransaction(!addNewTransaction);
@@ -18,16 +35,20 @@ export default function Profile({ toggle }) {
       {toggle ? (
         <ul className="total">
           <li className="list flex-space-between">
-            <h3>🐖 Wallet</h3>
-            <p>+$13,265.21</p>
+            <h3>🐖 Wallet Balance</h3>
+            <p>
+              {allTransactionBalance > 0
+                ? `+$${allTransactionBalance}`
+                : `-$${allTransactionBalance}`}
+            </p>
           </li>
           <li className="list flex-space-between">
             <h3>💸 All Expense</h3>
-            <p>-$8,326.21</p>
+            <p>-${expenseSum}</p>
           </li>
           <li className="list flex-space-between">
             <h3>💵 All Income</h3>
-            <p>+$13,26.21</p>
+            <p>+${incomeSum}</p>
           </li>
         </ul>
       ) : (

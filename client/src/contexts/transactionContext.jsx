@@ -1,11 +1,16 @@
 import { createContext, useEffect, useContext, useReducer } from 'react';
-import { getAllTransactions, getTransactionStats } from '../js/api-service';
+import {
+  getAllTransactions,
+  getTransactionStats,
+  getTransactionSummary,
+} from '../js/api-service';
 
 const TransactionContext = createContext();
 
 const initalState = {
   transactions: [],
   transactionStats: [],
+  transactionSummary: [],
   selectedType: 'Expense',
   selectedMonth: undefined,
   startDate: undefined,
@@ -22,6 +27,8 @@ function reducer(state, action) {
         ...state,
         transactionStats: action.payload,
       };
+    case 'loaded/transactionSummary':
+      return { ...state, transactionSummary: action.payload };
     case 'filterMonth/setStartDate':
       return { ...state, startDate: action.payload };
     case 'filterMonth/setEndDate':
@@ -44,6 +51,7 @@ function TransactionProvider({ children }) {
   const {
     transactions,
     transactionStats,
+    transactionSummary,
     selectedType,
     selectedMonth,
     startDate,
@@ -78,6 +86,18 @@ function TransactionProvider({ children }) {
     }
     fetchTransactionStats();
   }, [startDate, endDate, selectedType]);
+
+  //Fetch data with filter(date period)
+  useEffect(() => {
+    async function fetchTransactionSummary() {
+      const transactionSum = await getTransactionSummary(startDate, endDate);
+      dispatch({
+        type: 'loaded/transactionSummary',
+        payload: transactionSum,
+      });
+    }
+    fetchTransactionSummary();
+  }, [startDate, endDate]);
 
   //Filter by date period
   function monthFiler(value) {
@@ -115,6 +135,7 @@ function TransactionProvider({ children }) {
       value={{
         transactions,
         transactionStats,
+        transactionSummary,
         selectedType,
         selectedMonth,
         startDate,

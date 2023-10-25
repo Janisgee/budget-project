@@ -80,3 +80,27 @@ export async function getTransactionStats(start, end, type) {
     throw new Error('Fail to get transactions stats.');
   }
 }
+
+export async function getTransactionSummary(start, end) {
+  let url;
+  if (start === undefined && end === undefined) {
+    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats`;
+  } else {
+    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats?start=${start}&end=${end}`;
+  }
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+  });
+  if (response.status === 200) {
+    const data = await response.json();
+
+    return data.data.stats;
+  } else {
+    throw new Error('Fail to get transactions summary.');
+  }
+}
