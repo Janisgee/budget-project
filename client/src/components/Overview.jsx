@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
 import PieChart from './PieChart';
 import './Overview.css';
-import { getAllTransactions, getTransactionStats } from '../js/api-service';
+
+import { useTransaction } from '../contexts/transactionContext';
 
 export default function Overview() {
-  const [transactions, setTransactions] = useState([]);
-  const [transactionStats, setTransactionStats] = useState([]);
-  const [selectedType, setSelectedType] = useState('Expense');
-  const [selectedMonth, setSelectedMonth] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-
-  console.log(transactionStats);
+  const {
+    transactions,
+    transactionStats,
+    selectedType,
+    selectedMonth,
+    monthFiler,
+    typeFilter,
+  } = useTransaction();
 
   //Get unique month that have transactions
   const uniqueTransactionMonth = [];
@@ -24,7 +24,7 @@ export default function Overview() {
 
   //handle displaying Income or Expense
   function handleTypeFilter(e) {
-    setSelectedType(e.target.value);
+    typeFilter(e.target.value);
   }
 
   //Get unique array of category and value for the month
@@ -38,40 +38,8 @@ export default function Overview() {
   }
 
   function handleMonthFilter(e) {
-    if (e.target.value === 'All transactions') {
-      setStartDate(undefined);
-      setEndDate(undefined);
-    } else {
-      const start = e.target.value;
-      setSelectedMonth(start);
-
-      const startDate = new Date(start);
-      const endDate = new Date(startDate);
-      endDate.setMonth(startDate.getMonth() + 1);
-      setStartDate(startDate);
-      setEndDate(endDate);
-    }
+    monthFiler(e.target.value);
   }
-
-  useEffect(() => {
-    async function fetchTransactions() {
-      const allTransactions = await getAllTransactions();
-      setTransactions(allTransactions);
-    }
-    fetchTransactions();
-  }, []);
-
-  useEffect(() => {
-    async function fetchTransactionStats() {
-      const transactionStats = await getTransactionStats(
-        startDate,
-        endDate,
-        selectedType
-      );
-      setTransactionStats(transactionStats);
-    }
-    fetchTransactionStats();
-  }, [startDate, endDate, selectedType]);
 
   return (
     <div className="overview-container ">
@@ -86,7 +54,9 @@ export default function Overview() {
           >
             <option value="All transactions">All transactions</option>
             {uniqueTransactionMonth.map((month) => (
-              <option value={month}>{month}</option>
+              <option value={month} key={month}>
+                {month}
+              </option>
             ))}
           </select>
         </div>
