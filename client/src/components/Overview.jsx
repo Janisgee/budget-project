@@ -11,6 +11,8 @@ export default function Overview() {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
+  console.log(transactionStats);
+
   //Get unique month that have transactions
   const uniqueTransactionMonth = [];
 
@@ -101,11 +103,13 @@ export default function Overview() {
         </div>
       </div>
       <div className="overview-content">
-        <PieChart />
+        <PieChart
+          transactionStats={transactionStats}
+          selectedType={selectedType}
+        />
 
         <ul className="list-items">
           {transactionStats.map((trans) => {
-            console.log(trans._id.category);
             return (
               <li className="list flex-space-between" key={trans._id.category}>
                 <h4>{trans._id.category}</h4>
