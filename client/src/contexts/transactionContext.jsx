@@ -58,6 +58,20 @@ function TransactionProvider({ children }) {
     endDate,
   } = state;
 
+  const allTransactionBalance = transactions
+    .map((el) => (el.type === 'Expense' ? -el.value : el.value))
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const expenseSum = transactionSummary
+    .filter((el) => el._id.type === 'Expense')
+    .map((el) => el.sumValue)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const incomeSum = transactionSummary
+    .filter((el) => el._id.type === 'Income')
+    .map((el) => el.sumValue)
+    .reduce((acc, cur) => acc + cur, 0);
+
   //Fetch data (All transactions)
   useEffect(() => {
     async function fetchTransactions() {
@@ -140,6 +154,9 @@ function TransactionProvider({ children }) {
         selectedMonth,
         startDate,
         endDate,
+        allTransactionBalance,
+        expenseSum,
+        incomeSum,
         monthFiler,
         typeFilter,
       }}
