@@ -32,6 +32,36 @@ export async function doLogin(email, password) {
   }
 }
 
+export async function postNewTransaction(data) {
+  console.log(data);
+  console.log(JSON.stringify(data));
+
+  const response = await fetch(
+    `http://localhost:3000/api/v1/users/${userId}/transaction`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  console.log(response);
+
+  if (response.status === 201) {
+    showAlert('success', 'New transaction has been made!', 3);
+  } else {
+    throw new Error(
+      showAlert(
+        'error',
+        'Fail to create new transaction, please try again later.',
+        3
+      )
+    );
+  }
+}
+
 export async function getAllTransactions(start = undefined, end = undefined) {
   let url;
   if (start === undefined && end === undefined) {
@@ -104,3 +134,5 @@ export async function getTransactionSummary(start, end) {
     throw new Error('Fail to get transactions summary.');
   }
 }
+
+export function getCategoryList(type) {}

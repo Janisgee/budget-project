@@ -5,7 +5,7 @@ import './css/form.css';
 export default function Transaction() {
   return (
     <div className="transaction">
-      <div className="transaction-container">
+      <div className="transaction-container container">
         <div className="transaction-modal">
           <form
             action=""
