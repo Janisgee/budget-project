@@ -2,8 +2,12 @@ import './css/btn.css';
 import { Link } from 'react-router-dom';
 
 export default function NavBarAfterLogin({ toggle, ontoggle }) {
-  const handleToggleChange = () => {
-    ontoggle(!toggle);
+  const handleToggleChange = (e) => {
+    if (e.target.textContent === 'Overview') {
+      ontoggle(true);
+    } else {
+      ontoggle(false);
+    }
   };
   return (
     <nav className="navBarAfterLogin">
@@ -14,14 +18,14 @@ export default function NavBarAfterLogin({ toggle, ontoggle }) {
         <Link
           to="/user/overview"
           className={toggle ? 'link btn-overview active' : 'link btn-overview'}
-          onClick={handleToggleChange}
+          onClick={(e) => handleToggleChange(e)}
         >
           Overview
         </Link>
         <Link
           to="/user/transaction"
           className={toggle ? 'link btn-overview ' : 'link btn-overview active'}
-          onClick={handleToggleChange}
+          onClick={(e) => handleToggleChange(e)}
         >
           Transaction
         </Link>
