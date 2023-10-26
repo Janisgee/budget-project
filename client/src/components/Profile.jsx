@@ -7,23 +7,9 @@ import { expenseCategory, incomeCategory } from '../js/categories';
 import { postNewTransaction } from '../js/api-service';
 
 export default function Profile({ toggle }) {
-  const { transactions, transactionSummary } = useTransaction();
+  const { allTransactionBalance, expenseSum, incomeSum } = useTransaction();
   const [addNewTransaction, setAddNewTransaction] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState();
-  const allTransactionBalance = transactions
-    .map((el) => (el.type === 'Expense' ? -el.value : el.value))
-    .reduce((acc, cur) => acc + cur, 0);
-
-  const expenseSum = transactionSummary
-    .filter((el) => el._id.type === 'Expense')
-    .map((el) => el.sumValue)
-    .reduce((acc, cur) => acc + cur, 0);
-
-  const incomeSum = transactionSummary
-    .filter((el) => el._id.type === 'Income')
-    .map((el) => el.sumValue)
-    .reduce((acc, cur) => acc + cur, 0);
-  console.log(newTransactionType);
 
   const formRef = useRef();
 
@@ -32,17 +18,9 @@ export default function Profile({ toggle }) {
     const formData = new FormData(formRef.current);
 
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
 
     postNewTransaction(data);
-    // const type = formData.get('newTransaction-type');
-    // const value = formData.get('newTransaction-value');
-    // const category = formData.get('newTransaction-category');
-    // const date = formData.get('newTransaction-date');
-    // const tag = formData.get('newTransaction-tag');
 
-    // if (!type || !value || !category || !date) return;
-    // console.log(type, value, category, date, tag);
     try {
     } catch (err) {}
   }
