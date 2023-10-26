@@ -2,7 +2,20 @@ import EachDateTransaction from './EachDateTransaction';
 import './Transaction.css';
 import './css/form.css';
 
+import { useTransaction } from '../contexts/transactionContext';
+
 export default function Transaction() {
+  const { allTransactionBalance, expenseSum, incomeSum } = useTransaction();
+
+  function getToday() {
+    const today = new Date().toLocaleString('en-AU', {
+      timeZone: 'Asia/Hong_Kong',
+    });
+    const date = today.split(',')[0];
+    return date;
+  }
+  getToday();
+
   return (
     <div className="transaction">
       <div className="transaction-container container">
@@ -81,15 +94,19 @@ export default function Transaction() {
             </div>
             <div className="bal expense">
               <div className="balance-title">Expense</div>
-              <div>$2,549.19</div>
+              <div>${expenseSum}</div>
             </div>
             <div className="bal period-balance">
               <div className="balance-title">Period Balance</div>
               <div>+$4227.34</div>
             </div>
             <div className="bal balance">
-              <div className="balance-title">Balance on 30/4/2023</div>
-              <div>+$7011.63</div>
+              <div className="balance-title">Balance on {getToday()}</div>
+              <div>
+                {allTransactionBalance > 0
+                  ? `+$${allTransactionBalance}`
+                  : `-$${allTransactionBalance}`}
+              </div>
             </div>
           </div>
         </span>
