@@ -33,7 +33,7 @@ app.use(express.json({ limit: '10kb' }));
 //Middleware for Rating Limit for each IP
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, //60mins
-  limit: 100, // 100 requests limit in an hour for each IP
+  limit: 1000, // 100 requests limit in an hour for each IP
   message: 'Too many requests from same IP, please try again after an hour.',
 });
 
