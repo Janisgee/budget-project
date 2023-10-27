@@ -138,7 +138,7 @@ function TransactionProvider({ children }) {
     async function fetchTransactionInSpecificEndDay() {
       const transaction = await getTransactionSummary(
         'Fri Jan 01 2021 00:00:00 GMT+0800 (Australian Western Standard Time)',
-        endDate
+        endDate === undefined ? new Date() : endDate
       );
       dispatch({
         type: 'loaded/transactionInSpecificEndDay',
