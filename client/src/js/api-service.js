@@ -83,7 +83,7 @@ export async function getAllTransactions(start = undefined, end = undefined) {
 
     return data.data.transactions;
   } else {
-    throw new Error('Fail to get transactions.');
+    return responseError(response, 'Fail to get transactions.');
   }
 }
 
@@ -107,7 +107,7 @@ export async function getTransactionStats(start, end, type) {
 
     return data.data.stats;
   } else {
-    throw new Error('Fail to get transactions stats.');
+    return responseError(response, 'Fail to get transactions stats.');
   }
 }
 
@@ -131,8 +131,20 @@ export async function getTransactionSummary(start, end) {
 
     return data.data.stats;
   } else {
-    throw new Error('Fail to get transactions summary.');
+    return responseError(response, 'Fail to get transactions summary.');
   }
+}
+
+async function responseError(response, msg) {
+  const errorMessage = await response.text();
+  throw new Error(
+    JSON.stringify({
+      hint: msg,
+      errorMessage,
+      status: response.status,
+      statusText: response.statusText,
+    })
+  );
 }
 
 export function getCategoryList(type) {}
