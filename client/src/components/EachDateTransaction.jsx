@@ -1,35 +1,80 @@
 import './EachDateTransaction.css';
+import { useTransaction } from '../contexts/transactionContext';
+
+const dayFormatOption = {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+};
+
+function groupTransactionsByDate(transactions) {
+  const groupedData = {};
+  for (const obj of transactions) {
+    const date = obj.date;
+    if (!groupedData[date]) {
+      groupedData[date] = [];
+    }
+    groupedData[date].push(obj);
+  }
+  const groupedDataArray = Object.keys(groupedData).map((key) => {
+    const dayTransactions = groupedData[key];
+    return {
+      day: new Date(key).toLocaleDateString(undefined, dayFormatOption),
+      transactions: dayTransactions,
+      dayTotal: dayTransactions.reduce(
+        (acc, cur) => acc + cur.value * (cur.type === 'Income' ? 1 : -1),
+        0
+      ),
+    };
+  });
+  return groupedDataArray;
+}
 
 export default function EachDateTransaction() {
+  const { transactions } = useTransaction();
+  const datedTransactions = groupTransactionsByDate(transactions);
+
   return (
     <div className="each-transactions">
-      <div className="flex-space-between ">
-        <div className="each-transaction-date">Thursday, 19 October 2023</div>
-        <div className="each-transaction-total">+$98</div>
-      </div>
-      <hr />
-      <a href="" className="each-transaction-select">
-        <div className="flex-space-between ">
-          <div>
-            <span className="each-transaction-title strong-font">
-              🍽️ Eating Out
-            </span>
-            <span>🏷️</span>
-            <span>Moe's Tavern</span>
+      {datedTransactions.map(({ day, transactions, dayTotal }) => {
+        return (
+          <div key={day}>
+            <div className="flex-space-between ">
+              <div className="each-transaction-date">{day}</div>
+              <div className="each-transaction-total">
+                {dayTotal > 0 ? `+$${dayTotal}` : `-$${-dayTotal}`}
+              </div>
+            </div>
+            <hr />
+            {transactions.map((t) => (
+              <TransactionRow key={t._id} transaction={t} />
+            ))}
+            <br />
           </div>
-          <div>-AUD 35.60</div>
-        </div>
-      </a>
-      <div className="flex-space-between ">
-        <div>
-          <span className="each-transaction-title strong-font">
-            💖 Healthcare
-          </span>
-          <span>🏷️</span>
-          <span>Dentist</span>
-        </div>
-        <div>-AUD 350.60</div>
-      </div>
+        );
+      })}
     </div>
   );
 }
+
+const TransactionRow = ({ transaction }) => {
+  return (
+    <a href="" className="each-transaction-select">
+      <div className="flex-space-between ">
+        <div>
+          <span className="each-transaction-title strong-font">
+            {transaction.category}
+          </span>
+          <span>🏷️</span>
+          <span>{transaction.tag}</span>
+        </div>
+        <div>
+          {transaction.category === 'Income'
+            ? `+$${transaction.value}`
+            : `-$${transaction.value}`}
+        </div>
+      </div>
+    </a>
+  );
+};
