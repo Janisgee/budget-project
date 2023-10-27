@@ -1,7 +1,7 @@
 import PieChart from './PieChart';
 import './Overview.css';
 
-import { useTransaction } from '../contexts/transactionContext';
+import { useOverview } from '../contexts/overviewContext';
 
 export default function Overview() {
   const {
@@ -11,7 +11,7 @@ export default function Overview() {
     selectedMonth,
     monthFiler,
     typeFilter,
-  } = useTransaction();
+  } = useOverview();
 
   //Get unique month that have transactions
   const uniqueTransactionMonth = [];
@@ -52,7 +52,7 @@ export default function Overview() {
             className="btn"
             onChange={handleMonthFilter}
           >
-            <option value="All transactions">All transactions</option>
+            <option>All transactions</option>
             {uniqueTransactionMonth.map((month) => (
               <option value={month} key={month}>
                 {month}

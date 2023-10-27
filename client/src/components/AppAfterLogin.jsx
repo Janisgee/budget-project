@@ -5,25 +5,28 @@ import { Outlet } from 'react-router-dom';
 import Profile from './Profile';
 
 // import { getAllTransactions } from '../js/api-service';
+import { OverviewProvider } from '../contexts/overviewContext';
 import { TransactionProvider } from '../contexts/transactionContext';
 
 function AppAfterLogin() {
   const [toggle, setToggle] = useState(true);
 
   return (
-    <TransactionProvider>
+    <OverviewProvider>
       <div className="App">
         <div className="walletPage">
           <div className="wallet-child-1">
             <NavBarAfterLogin toggle={toggle} ontoggle={setToggle} />
-            <Outlet />
+            <TransactionProvider>
+              <Outlet />
+            </TransactionProvider>
           </div>
           <div className="wallet-child-2">
             <Profile toggle={toggle} />
           </div>
         </div>
       </div>
-    </TransactionProvider>
+    </OverviewProvider>
   );
 }
 

@@ -2,12 +2,12 @@ import { useState, useRef } from 'react';
 import './Profile.css';
 import './css/form.css';
 
-import { useTransaction } from '../contexts/transactionContext';
+import { useOverview } from '../contexts/overviewContext';
 import { expenseCategory, incomeCategory } from '../js/categories';
 import { postNewTransaction } from '../js/api-service';
 
 export default function Profile({ toggle }) {
-  const { allTransactionBalance, expenseSum, incomeSum } = useTransaction();
+  const { allTransactionBalance, expenseSum, incomeSum } = useOverview();
   const [addNewTransaction, setAddNewTransaction] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState();
 
