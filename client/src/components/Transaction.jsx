@@ -17,15 +17,12 @@ export default function Transaction() {
 
   const periodBalance = incomeSum - expenseSum;
 
-  // console.log('transactions', transactions);
-  // console.log('allTransactionBalance', allTransactionBalance);
   function formatDate(date) {
     const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
     const newDate = new Date(date).toLocaleDateString('en-au', option);
 
     return newDate;
   }
-  console.log();
 
   function getPreviousMonthSelection() {
     const passMonthList = [];
@@ -160,19 +157,11 @@ export default function Transaction() {
         <div className="transaction-content flex-space-between">
           <div>
             <span className="transaction-content-heading">Transactions</span>
-            <select name="transaction-sort-by" className="btn">
-              <option value="IncomeAndExpense">Income and Expense</option>
-              <option value="Income">Income</option>
-              <option value="Expense">Expense</option>
-            </select>
           </div>
           <div>Recent</div>
         </div>
         <hr />
         <div className="eachDateTransaction-group">
-          <EachDateTransaction />
-          <EachDateTransaction />
-          <EachDateTransaction />
           <EachDateTransaction />
         </div>
       </div>

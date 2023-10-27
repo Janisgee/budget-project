@@ -1,9 +1,5 @@
 import { createContext, useEffect, useContext, useReducer } from 'react';
-import {
-  getAllTransactions,
-  getTransactionStats,
-  getTransactionSummary,
-} from '../js/api-service';
+import { getAllTransactions, getTransactionSummary } from '../js/api-service';
 
 const TransactionContext = createContext();
 
