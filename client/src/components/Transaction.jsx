@@ -5,16 +5,53 @@ import './css/form.css';
 import { useTransaction } from '../contexts/transactionContext';
 
 export default function Transaction() {
-  const { allTransactionBalance, expenseSum, incomeSum } = useTransaction();
+  const {
+    transactions,
+    allTranBeforeEndDay,
+    expenseSum,
+    incomeSum,
+    endDate,
+    selectedMonth,
+    monthFiler,
+  } = useTransaction();
 
-  function getToday() {
-    const today = new Date().toLocaleString('en-AU', {
+  const periodBalance = incomeSum - expenseSum;
+
+  // console.log('transactions', transactions);
+  // console.log('allTransactionBalance', allTransactionBalance);
+  function formatDate(date) {
+    const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
+    const newDate = new Date(date).toLocaleDateString('en-au', option);
+
+    return newDate;
+  }
+  console.log();
+
+  function getPreviousMonthSelection() {
+    const passMonthList = [];
+    const currentDate = new Date();
+    for (let i = 0; i < 18; i++) {
+      // Create a new Date object for the previous month
+      const previousMonth = new Date(currentDate);
+      previousMonth.setMonth(currentDate.getMonth() - i);
+      passMonthList.push(formatDate(previousMonth));
+    }
+
+    return passMonthList;
+  }
+  getPreviousMonthSelection();
+
+  function getDay(date) {
+    const today = new Date(date).toLocaleString('en-AU', {
       timeZone: 'Asia/Hong_Kong',
     });
-    const date = today.split(',')[0];
-    return date;
+    const newDate = today.split(',')[0];
+    return newDate;
   }
-  getToday();
+
+  function handleMonthFilter(e) {
+    monthFiler(e.target.value);
+  }
 
   return (
     <div className="transaction">
@@ -56,7 +93,7 @@ export default function Transaction() {
             </div>
             <div>
               <label htmlFor="tag">Tag: </label>
-              <input type="tag" id="tag" placeholder="note" />
+              <input type="text" placeholder="note" id="tag" />
             </div>
             <div className="flex-space-between">
               <button className="btn">Save Transaction</button>
@@ -75,22 +112,23 @@ export default function Transaction() {
         </div>
         <span className="transaction-heading">
           <h3>Cameron's Account</h3>
-          <select name="transaction-sort-by-month" className="btn" id="sort-by">
-            <option value="Jan 2023">Jan 2023</option>
-            <option value="Feb 2023">Feb 2023</option>
-            <option value="Mar 2023">Mar 2023</option>
-            <option value="Apr 2023">Apr 2023</option>
-            <option value="May 2023">May 2023</option>
-            <option value="Jun 2023">Jun 2023</option>
-            <option value="Jul 2023">Jul 2023</option>
-            <option value="Aug 2023">Aug 2023</option>
-            <option value="Sept 2023">Sept 2023</option>
-            <option value="Oct 2023">Oct 2023</option>
+          <select
+            name="transaction-sort-by-month"
+            className="btn"
+            value={selectedMonth}
+            onChange={handleMonthFilter}
+          >
+            <option value="All Time">All Time</option>
+            {getPreviousMonthSelection().map((month) => (
+              <option value={month} key={month}>
+                {month}
+              </option>
+            ))}
           </select>
           <div className="all-balance">
             <div className="bal income">
               <div className="balance-title">Income</div>
-              <div>$6,776.53</div>
+              <div>${incomeSum}</div>
             </div>
             <div className="bal expense">
               <div className="balance-title">Expense</div>
@@ -98,14 +136,23 @@ export default function Transaction() {
             </div>
             <div className="bal period-balance">
               <div className="balance-title">Period Balance</div>
-              <div>+$4227.34</div>
+              <div>
+                {periodBalance > 0
+                  ? `+$${periodBalance}`
+                  : `-$${-periodBalance}`}
+              </div>
             </div>
             <div className="bal balance">
-              <div className="balance-title">Balance on {getToday()}</div>
+              <div className="balance-title">
+                Balance on{' '}
+                {endDate === undefined
+                  ? getDay(new Date())
+                  : getDay(new Date(endDate - 1))}
+              </div>
               <div>
-                {allTransactionBalance > 0
-                  ? `+$${allTransactionBalance}`
-                  : `-$${allTransactionBalance}`}
+                {allTranBeforeEndDay > 0
+                  ? `+$${allTranBeforeEndDay}`
+                  : `-$${-allTranBeforeEndDay}`}
               </div>
             </div>
           </div>
@@ -113,10 +160,10 @@ export default function Transaction() {
         <div className="transaction-content flex-space-between">
           <div>
             <span className="transaction-content-heading">Transactions</span>
-            <select name="transaction-sort-by" className="btn" id="sort-by">
-              <option value="all transactions">All transactions</option>
-              <option value="income">Incomes</option>
-              <option value="expense">Expense</option>
+            <select name="transaction-sort-by" className="btn">
+              <option value="IncomeAndExpense">Income and Expense</option>
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
             </select>
           </div>
           <div>Recent</div>

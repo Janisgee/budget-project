@@ -11,7 +11,8 @@ const initalState = {
   transactions: [],
   transactionStats: [],
   transactionSummary: [],
-  selectedType: 'Expense',
+  transactionInSpecificEndDay: [],
+  // selectedType: 'Expense',
   selectedMonth: undefined,
   startDate: undefined,
   endDate: undefined,
@@ -29,16 +30,22 @@ function reducer(state, action) {
       };
     case 'loaded/transactionSummary':
       return { ...state, transactionSummary: action.payload };
-    case 'filterMonth/setStartDate':
-      return { ...state, startDate: action.payload };
-    case 'filterMonth/setEndDate':
-      return { ...state, endDate: action.payload };
+    case 'loaded/transactionInSpecificEndDay':
+      return { ...state, transactionInSpecificEndDay: action.payload };
+    // case 'filterMonth/setStartDate':
+    //   return { ...state, startDate: action.payload };
+    // case 'filterMonth/setEndDate':
+    //   return { ...state, endDate: action.payload };
     case 'filterMonth/setSelectedMonth':
       return { ...state, selectedMonth: action.payload };
-    case 'filterType':
-      return { ...state, selectedType: action.payload };
-    case 'set_multiple':
-      return { ...state, ...action.payload };
+    case 'filterMonth/setStartEnd':
+      return {
+        ...state,
+        startDate: action.payload.startDate,
+        endDate: action.payload.endDate,
+      };
+    // case 'filterType':
+    //   return { ...state, selectedType: action.payload };
     case 'rejected':
       return { ...state, error: action.payload };
     default:
@@ -52,7 +59,8 @@ function TransactionProvider({ children }) {
     transactions,
     transactionStats,
     transactionSummary,
-    selectedType,
+    transactionInSpecificEndDay,
+    // selectedType,
     selectedMonth,
     startDate,
     endDate,
@@ -60,6 +68,10 @@ function TransactionProvider({ children }) {
 
   const allTransactionBalance = transactions
     .map((el) => (el.type === 'Expense' ? -el.value : el.value))
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const allTranBeforeEndDay = transactionInSpecificEndDay
+    .map((el) => (el._id.type === 'Expense' ? -el.sumValue : el.sumValue))
     .reduce((acc, cur) => acc + cur, 0);
 
   const expenseSum = transactionSummary
@@ -89,17 +101,17 @@ function TransactionProvider({ children }) {
   }, []);
 
   //Fetch data with filter(date period and type)
-  useEffect(() => {
-    async function fetchTransactionStats() {
-      const transactionStats = await getTransactionStats(
-        startDate,
-        endDate,
-        selectedType
-      );
-      dispatch({ type: 'loaded/transactionStats', payload: transactionStats });
-    }
-    fetchTransactionStats();
-  }, [startDate, endDate, selectedType]);
+  // useEffect(() => {
+  //   async function fetchTransactionStats() {
+  //     const transactionStats = await getTransactionStats(
+  //       startDate,
+  //       endDate,
+  //       selectedType
+  //     );
+  //     dispatch({ type: 'loaded/transactionStats', payload: transactionStats });
+  //   }
+  //   fetchTransactionStats();
+  // }, [startDate, endDate, selectedType]);
 
   //Fetch data with filter(date period)
   useEffect(() => {
@@ -113,36 +125,60 @@ function TransactionProvider({ children }) {
     fetchTransactionSummary();
   }, [startDate, endDate]);
 
+  // Fetch all data (Transaction Stats without filter)
+  // useEffect(() => {
+  //   async function fetchAllTransactionStats() {
+  //     const allTransactionStats = await getTransactionSummary();
+  //     dispatch;
+  //   }
+  // });
+
+  //Fetch data until specific end date
+  useEffect(() => {
+    async function fetchTransactionInSpecificEndDay() {
+      const transaction = await getTransactionSummary(
+        'Fri Jan 01 2021 00:00:00 GMT+0800 (Australian Western Standard Time)',
+        endDate
+      );
+      dispatch({
+        type: 'loaded/transactionInSpecificEndDay',
+        payload: transaction,
+      });
+    }
+    fetchTransactionInSpecificEndDay();
+  }, [endDate]);
+
   //Filter by date period
   function monthFiler(value) {
-    if (value === 'All transactions') {
+    dispatch({
+      type: 'filterMonth/setSelectedMonth',
+      payload: value,
+    });
+
+    if (value === 'All Time') {
       dispatch({
-        type: 'set_multiple',
+        type: 'filterMonth/setStartEnd',
         payload: { startDate: undefined, endDate: undefined },
       });
     } else {
       const start = value;
-      dispatch({
-        type: 'filterMonth/setSelectedMonth',
-        payload: start,
-      });
       const dateStart = new Date(start);
       const dateEnd = new Date(dateStart);
       dateEnd.setMonth(dateStart.getMonth() + 1);
       dispatch({
-        type: 'set_multiple',
+        type: 'filterMonth/setStartEnd',
         payload: { startDate: dateStart, endDate: dateEnd },
       });
     }
   }
 
   //Filter by type
-  function typeFilter(type) {
-    dispatch({
-      type: 'filterType',
-      payload: type,
-    });
-  }
+  // function typeFilter(type) {
+  //   dispatch({
+  //     type: 'filterType',
+  //     payload: type,
+  //   });
+  // }
 
   return (
     <TransactionContext.Provider
@@ -150,7 +186,9 @@ function TransactionProvider({ children }) {
         transactions,
         transactionStats,
         transactionSummary,
-        selectedType,
+        transactionInSpecificEndDay,
+        allTranBeforeEndDay,
+        // selectedType,
         selectedMonth,
         startDate,
         endDate,
@@ -158,7 +196,7 @@ function TransactionProvider({ children }) {
         expenseSum,
         incomeSum,
         monthFiler,
-        typeFilter,
+        // typeFilter,
       }}
     >
       {children}
