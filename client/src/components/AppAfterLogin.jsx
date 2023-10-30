@@ -7,6 +7,7 @@ import Profile from './Profile';
 // import { getAllTransactions } from '../js/api-service';
 import { OverviewProvider } from '../contexts/overviewContext';
 import { TransactionProvider } from '../contexts/transactionContext';
+import { ModalProvider } from '../contexts/modalContext';
 
 function AppAfterLogin() {
   const [toggle, setToggle] = useState(true);
@@ -18,7 +19,9 @@ function AppAfterLogin() {
           <div className="wallet-child-1">
             <NavBarAfterLogin toggle={toggle} ontoggle={setToggle} />
             <TransactionProvider>
-              <Outlet />
+              <ModalProvider>
+                <Outlet />
+              </ModalProvider>
             </TransactionProvider>
           </div>
           <div className="wallet-child-2">

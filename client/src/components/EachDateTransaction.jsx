@@ -1,5 +1,6 @@
 import './EachDateTransaction.css';
 import { useTransaction } from '../contexts/transactionContext';
+import { useModal } from '../contexts/modalContext';
 
 const dayFormatOption = {
   weekday: 'long',
@@ -31,7 +32,7 @@ function groupTransactionsByDate(transactions) {
   return groupedDataArray;
 }
 
-export default function EachDateTransaction() {
+export default function EachDateTransaction({}) {
   const { transactions } = useTransaction();
   const datedTransactions = groupTransactionsByDate(transactions);
 
@@ -59,9 +60,16 @@ export default function EachDateTransaction() {
 }
 
 const TransactionRow = ({ transaction }) => {
+  const { handleShowModal } = useModal();
+
   return (
-    <a href="" className="each-transaction-select">
-      <div className="flex-space-between ">
+    <button
+      className="each-transaction-select"
+      onClick={(e) => {
+        handleShowModal(e, 'transaction-modal', transaction);
+      }}
+    >
+      <div className="flex-space-between">
         <div>
           <span className="each-transaction-title strong-font">
             {transaction.category}
@@ -75,6 +83,6 @@ const TransactionRow = ({ transaction }) => {
             : `-$${transaction.value}`}
         </div>
       </div>
-    </a>
+    </button>
   );
 };

@@ -1,12 +1,12 @@
+import { useTransaction } from '../contexts/transactionContext';
+import { useModal } from '../contexts/modalContext';
 import EachDateTransaction from './EachDateTransaction';
+import Modal from './Modal';
 import './Transaction.css';
 import './css/form.css';
 
-import { useTransaction } from '../contexts/transactionContext';
-
 export default function Transaction() {
   const {
-    transactions,
     allTranBeforeEndDay,
     expenseSum,
     incomeSum,
@@ -15,12 +15,24 @@ export default function Transaction() {
     monthFiler,
   } = useTransaction();
 
+  const { showModal } = useModal();
+  // const [showModal, setShowModal] = useState(false);
+  // const [closeModel, setCloseModal] = useState(false);
+  // const [editTrans, setEditTrans] = useState({});
+  // console.log(showModal, editTrans);
+
   const periodBalance = incomeSum - expenseSum;
+
+  // function handleCloseModel(e) {
+  //   e.preventDefault();
+  //   setCloseModal(true);
+  //   const modalElement = document.getElementById('transaction-modal');
+  //   modalElement.classList.add('displayNone');
+  // }
 
   function formatDate(date) {
     const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
     const newDate = new Date(date).toLocaleDateString('en-au', option);
-
     return newDate;
   }
 
@@ -33,7 +45,6 @@ export default function Transaction() {
       previousMonth.setMonth(currentDate.getMonth() - i);
       passMonthList.push(formatDate(previousMonth));
     }
-
     return passMonthList;
   }
   getPreviousMonthSelection();
@@ -53,60 +64,8 @@ export default function Transaction() {
   return (
     <div className="transaction">
       <div className="transaction-container container">
-        <div className="transaction-modal">
-          <form
-            action=""
-            method="get"
-            className="form-transaction transaction-modal-content"
-          >
-            <div className="flex-space-between">
-              <span>Edit Transaction</span>
-              <button className="closeButton">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div>
-              <label htmlFor="type">Type: </label>
-              <select name="type" id="type" required>
-                <option value="">--Please choose a type</option>
-                <option vallue="income">Income</option>
-                <option vallue="expense">Expense</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="value">Value: </label>
-              <input type="number" id="value" placeholder="amount" />
-            </div>
-            <div>
-              <label htmlFor="category">Category: </label>
-              <select name="category" id="category" required>
-                <option value="">--Please choose a category</option>
-                <option value=""></option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="date">Date: </label>
-              <input type="date" name="date" id="date" required />
-            </div>
-            <div>
-              <label htmlFor="tag">Tag: </label>
-              <input type="text" placeholder="note" id="tag" />
-            </div>
-            <div className="flex-space-between">
-              <button className="btn">Save Transaction</button>
-              <button className="btn ">Delete Transaction</button>
-            </div>
-          </form>
-        </div>
-        <div className="transaction-modal  confirm-delete-modal">
-          <div className="confirm-delete-content">
-            <h2>Are you sure you want to delete this transaction?</h2>
-            <span className="">
-              <button className="btn btn-red">Delete</button>
-              <button className="btn">Cancel</button>
-            </span>
-          </div>
-        </div>
+        {/* {showModal ? <Modal /> : ''} */}
+        <Modal />
         <span className="transaction-heading">
           <h3>Cameron's Account</h3>
           <select
@@ -116,8 +75,8 @@ export default function Transaction() {
             onChange={handleMonthFilter}
           >
             <option value="All Time">All Time</option>
-            {getPreviousMonthSelection().map((month) => (
-              <option value={month} key={month}>
+            {getPreviousMonthSelection().map((month, i) => (
+              <option value={month} key={i}>
                 {month}
               </option>
             ))}
