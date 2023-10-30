@@ -34,23 +34,31 @@ export default function PieChart({ transactionStats, selectedType }) {
 
   const colours = categoryList.map((categoryName) => colorMap[categoryName]);
 
+  console.log(categoryList);
+
   return (
     <div className="pieChart">
-      <Doughnut
-        data={{
-          labels: categoryList,
-          // animation: [{ animateScale: true }],
-          datasets: [
-            {
-              label: `My ${selectedType}`,
-              data: sumValueList,
+      {categoryList.length === 0 ? (
+        <h3>
+          There is no {selectedType.toLowerCase()} transaction in this month.
+        </h3>
+      ) : (
+        <Doughnut
+          data={{
+            labels: categoryList,
+            // animation: [{ animateScale: true }],
+            datasets: [
+              {
+                label: `My ${selectedType}`,
+                data: sumValueList,
 
-              backgroundColor: colours,
-              hoverOffset: 4,
-            },
-          ],
-        }}
-      />
+                backgroundColor: colours,
+                hoverOffset: 4,
+              },
+            ],
+          }}
+        />
+      )}
     </div>
   );
 }
