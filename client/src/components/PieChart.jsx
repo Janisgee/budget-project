@@ -34,8 +34,6 @@ export default function PieChart({ transactionStats, selectedType }) {
 
   const colours = categoryList.map((categoryName) => colorMap[categoryName]);
 
-  console.log(categoryList);
-
   return (
     <div className="pieChart">
       {categoryList.length === 0 ? (
