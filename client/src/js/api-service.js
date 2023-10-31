@@ -62,6 +62,36 @@ export async function postNewTransaction(data) {
   }
 }
 
+export async function patchUpdateTransaction(data) {
+  console.log(data);
+  console.log(JSON.stringify(data));
+
+  const response = await fetch(
+    `http://localhost:3000/api/v1/users/${userId}/transaction/${data._id}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  console.log(response);
+
+  if (response.status === 200) {
+    showAlert('success', 'Transaction has been updated!', 3);
+  } else {
+    throw new Error(
+      showAlert(
+        'error',
+        'Fail to update transaction, please try again later.',
+        3
+      )
+    );
+  }
+}
+
 export async function getAllTransactions(start = undefined, end = undefined) {
   let url;
   if (start === undefined && end === undefined) {
