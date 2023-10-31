@@ -18,27 +18,30 @@ function groupTransactionsByDate(transactions) {
     }
     groupedData[date].push(obj);
   }
-  const groupedDataArray = Object.keys(groupedData).map((key) => {
-    const dayTransactions = groupedData[key];
-    return {
-      day: new Date(key).toLocaleDateString(undefined, dayFormatOption),
-      transactions: dayTransactions,
-      dayTotal: dayTransactions.reduce(
-        (acc, cur) => acc + cur.value * (cur.type === 'Income' ? 1 : -1),
-        0
-      ),
-    };
-  });
+  const groupedDataArray = Object.keys(groupedData)
+    .map((key) => {
+      const dayTransactions = groupedData[key];
+      return {
+        day: new Date(key).toLocaleDateString(undefined, dayFormatOption),
+        transactions: dayTransactions,
+        dayTotal: dayTransactions.reduce(
+          (acc, cur) => acc + cur.value * (cur.type === 'Income' ? 1 : -1),
+          0
+        ),
+      };
+    })
+    .sort((a, b) => new Date(b.day) - new Date(a.day));
   return groupedDataArray;
 }
 
-export default function EachDateTransaction({}) {
+export default function EachDateTransaction() {
   const { transactions } = useTransaction();
   const datedTransactions = groupTransactionsByDate(transactions);
 
   return (
     <div className="each-transactions">
       {datedTransactions.map(({ day, transactions, dayTotal }) => {
+        console.log(datedTransactions);
         return (
           <div key={day}>
             <div className="flex-space-between ">
@@ -78,7 +81,7 @@ const TransactionRow = ({ transaction }) => {
           <span>{transaction.tag}</span>
         </div>
         <div>
-          {transaction.category === 'Income'
+          {transaction.type === 'Income'
             ? `+$${transaction.value}`
             : `-$${transaction.value}`}
         </div>
