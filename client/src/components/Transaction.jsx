@@ -1,5 +1,5 @@
 import { useTransaction } from '../contexts/transactionContext';
-import { useModal } from '../contexts/modalContext';
+
 import EachDateTransaction from './EachDateTransaction';
 import Modal from './Modal';
 import './Transaction.css';
