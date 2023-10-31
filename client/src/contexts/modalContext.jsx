@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 
 const ModalContext = createContext();
-const initalState = { editTrans: {} };
+const initalState = { editTrans: undefined };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -15,7 +15,7 @@ function reducer(state, action) {
 function ModalProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initalState);
 
-  const { showModal, editTrans } = state;
+  const { editTrans } = state;
 
   function handleShowModal(e, modalId, data) {
     e.preventDefault();
@@ -32,11 +32,12 @@ function ModalProvider({ children }) {
     e.preventDefault();
     const modalElement = document.getElementById(modalId);
     modalElement.classList.add('displayNone');
+    dispatch({ type: 'editData', payload: undefined });
   }
 
   return (
     <ModalContext.Provider
-      value={{ showModal, handleShowModal, editTrans, handleCloseModal }}
+      value={{ handleShowModal, editTrans, handleCloseModal }}
     >
       {children}
     </ModalContext.Provider>

@@ -15,20 +15,9 @@ export default function Transaction() {
     monthFiler,
   } = useTransaction();
 
-  const { showModal } = useModal();
-  // const [showModal, setShowModal] = useState(false);
-  // const [closeModel, setCloseModal] = useState(false);
-  // const [editTrans, setEditTrans] = useState({});
-  // console.log(showModal, editTrans);
+  // const { showModal } = useModal();
 
   const periodBalance = incomeSum - expenseSum;
-
-  // function handleCloseModel(e) {
-  //   e.preventDefault();
-  //   setCloseModal(true);
-  //   const modalElement = document.getElementById('transaction-modal');
-  //   modalElement.classList.add('displayNone');
-  // }
 
   function formatDate(date) {
     const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
