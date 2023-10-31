@@ -142,7 +142,7 @@ function TransactionProvider({ children }) {
       });
     }
     fetchTransactionInSpecificEndDay();
-  }, [endDate]);
+  }, [endDate, transactions]);
 
   //Filter by date period
   function monthFiler(value) {
@@ -166,6 +166,17 @@ function TransactionProvider({ children }) {
         payload: { startDate: dateStart, endDate: dateEnd },
       });
     }
+  }
+
+  function updateTransaction(updatedTrans) {
+    console.log(updatedTrans);
+    const indexToUpdate = transactions.findIndex(
+      (trans) => trans._id === updatedTrans._id
+    );
+    const newTransactionArray = transactions.map((oldTrans, index) =>
+      index === indexToUpdate ? updatedTrans : oldTrans
+    );
+    dispatch({ type: 'loaded/transactions', payload: newTransactionArray });
   }
 
   //Filter by type
@@ -192,6 +203,7 @@ function TransactionProvider({ children }) {
         expenseSum,
         incomeSum,
         monthFiler,
+        updateTransaction,
         // typeFilter,
       }}
     >
