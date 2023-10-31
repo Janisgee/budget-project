@@ -28,17 +28,14 @@ function ModalProvider({ children }) {
     modalElement.classList.remove('displayNone');
   }
 
-  function handleCloseModal(e, modalId) {
-    e.preventDefault();
+  function closeModal(modalId) {
     const modalElement = document.getElementById(modalId);
     modalElement.classList.add('displayNone');
     dispatch({ type: 'editData', payload: undefined });
   }
 
   return (
-    <ModalContext.Provider
-      value={{ handleShowModal, editTrans, handleCloseModal }}
-    >
+    <ModalContext.Provider value={{ handleShowModal, editTrans, closeModal }}>
       {children}
     </ModalContext.Provider>
   );
