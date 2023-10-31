@@ -15,7 +15,6 @@ export default function Modal() {
   const [editCategory, setEditCategory] = useState(
     editTrans ? editTrans.category : ''
   );
-  console.log(editTrans);
 
   useEffect(() => {
     if (editTrans) {
@@ -23,7 +22,6 @@ export default function Modal() {
       setEditCategory(editTrans.category);
     }
   }, [editTrans]);
-  console.log(editType);
 
   const editFormRef = useRef();
 
@@ -43,6 +41,7 @@ export default function Modal() {
     const data = Object.fromEntries(formData.entries());
 
     const updatedData = mergeUpdatedTransAndOldTrans(data);
+    updatedData.date = new Date(updatedData.date).toISOString();
     console.log(updatedData);
     //Update Trans in server (Need to make sure server load first)
     await patchUpdateTransaction(updatedData, editTrans._id);
