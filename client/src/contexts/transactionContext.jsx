@@ -80,69 +80,54 @@ function TransactionProvider({ children }) {
     .map((el) => el.sumValue)
     .reduce((acc, cur) => acc + cur, 0);
 
-  //Fetch data (All transactions)
   useEffect(() => {
-    async function fetchTransactions() {
-      try {
-        const allTransactions = await getAllTransactions();
-        dispatch({ type: 'loaded/transactions', payload: allTransactions });
-      } catch (err) {
-        dispatch({
-          type: 'rejected',
-          payload: 'There was an error while loading transactions...',
-        });
-      }
-    }
+    //Fetch data (All transactions)
     fetchTransactions();
   }, []);
 
-  //Fetch data with filter(date period and type)
-  // useEffect(() => {
-  //   async function fetchTransactionStats() {
-  //     const transactionStats = await getTransactionStats(
-  //       startDate,
-  //       endDate,
-  //       selectedType
-  //     );
-  //     dispatch({ type: 'loaded/transactionStats', payload: transactionStats });
-  //   }
-  //   fetchTransactionStats();
-  // }, [startDate, endDate, selectedType]);
-
-  //Fetch data with filter(date period)
   useEffect(() => {
-    async function fetchTransactionSummary() {
-      const transactionSum = await getTransactionSummary(startDate, endDate);
-      dispatch({
-        type: 'loaded/transactionSummary',
-        payload: transactionSum,
-      });
-    }
+    //Fetch data with filter(date period)
     fetchTransactionSummary();
   }, [startDate, endDate]);
 
-  // Fetch all data (Transaction Stats without filter)
-  // useEffect(() => {
-  //   async function fetchAllTransactionStats() {
-  //     const allTransactionStats = await getTransactionSummary();
-  //     dispatch;
-  //   }
-  // });
+  useEffect(() => {
+    //Fetch data until specific end date
+    fetchTransactionInSpecificEndDay();
+  }, [endDate]);
+
+  //Fetch data with filter(date period)
+  async function fetchTransactionSummary() {
+    const transactionSum = await getTransactionSummary(startDate, endDate);
+    dispatch({
+      type: 'loaded/transactionSummary',
+      payload: transactionSum,
+    });
+  }
 
   //Fetch data until specific end date
-  useEffect(() => {
-    async function fetchTransactionInSpecificEndDay() {
-      const transaction = await getTransactionSummary(
-        'Fri Jan 01 2021 00:00:00 GMT+0800 (Australian Western Standard Time)',
-        endDate === undefined ? new Date() : endDate
-      );
+  async function fetchTransactionInSpecificEndDay() {
+    const transaction = await getTransactionSummary(
+      'Fri Jan 01 2021 00:00:00 GMT+0800 (Australian Western Standard Time)',
+      endDate === undefined ? new Date() : endDate
+    );
+    dispatch({
+      type: 'loaded/transactionInSpecificEndDay',
+      payload: transaction,
+    });
+  }
+
+  //Fetch data (All transactions)
+  async function fetchTransactions() {
+    try {
+      const allTransactions = await getAllTransactions();
+      dispatch({ type: 'loaded/transactions', payload: allTransactions });
+    } catch (err) {
       dispatch({
-        type: 'loaded/transactionInSpecificEndDay',
-        payload: transaction,
+        type: 'rejected',
+        payload: 'There was an error while loading transactions...',
       });
     }
-    fetchTransactionInSpecificEndDay();
-  }, [endDate, transactions]);
+  }
 
   //Filter by date period
   function monthFiler(value) {
@@ -177,6 +162,19 @@ function TransactionProvider({ children }) {
       index === indexToUpdate ? updatedTrans : oldTrans
     );
     dispatch({ type: 'loaded/transactions', payload: newTransactionArray });
+    fetchTransactionInSpecificEndDay();
+  }
+
+  function createTransaction() {
+    fetchTransactions();
+    fetchTransactionInSpecificEndDay();
+  }
+
+  function deleteTransaction(transactionId) {
+    const newArray = transactions.filter((item) => item.id !== transactionId);
+    dispatch({ type: 'loaded/transactions', payload: newArray });
+    fetchTransactions();
+    fetchTransactionInSpecificEndDay();
   }
 
   //Filter by type
@@ -204,6 +202,8 @@ function TransactionProvider({ children }) {
         incomeSum,
         monthFiler,
         updateTransaction,
+        createTransaction,
+        deleteTransaction,
         // typeFilter,
       }}
     >
