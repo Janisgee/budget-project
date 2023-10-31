@@ -92,6 +92,32 @@ export async function patchUpdateTransaction(data) {
   }
 }
 
+export async function deleteServerTransaction(transactionId) {
+  const response = await fetch(
+    `http://localhost:3000/api/v1/users/${userId}/transaction/${transactionId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }
+  );
+  console.log(response);
+
+  if (response.status === 204) {
+    showAlert('success', 'Transaction has been deleted!', 3);
+  } else {
+    throw new Error(
+      showAlert(
+        'error',
+        'Fail to delete transaction, please try again later.',
+        3
+      )
+    );
+  }
+}
+
 export async function getAllTransactions(start = undefined, end = undefined) {
   let url;
   if (start === undefined && end === undefined) {
