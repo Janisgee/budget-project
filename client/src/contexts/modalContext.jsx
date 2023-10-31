@@ -17,13 +17,13 @@ function ModalProvider({ children }) {
 
   const { editTrans } = state;
 
-  function handleShowModal(e, modalId, data) {
-    e.preventDefault();
-
+  function selectTransaction(data) {
     if (data) {
       dispatch({ type: 'editData', payload: data });
     }
+  }
 
+  function showModal(modalId) {
     const modalElement = document.getElementById(modalId);
     modalElement.classList.remove('displayNone');
   }
@@ -35,7 +35,9 @@ function ModalProvider({ children }) {
   }
 
   return (
-    <ModalContext.Provider value={{ handleShowModal, editTrans, closeModal }}>
+    <ModalContext.Provider
+      value={{ selectTransaction, editTrans, showModal, closeModal }}
+    >
       {children}
     </ModalContext.Provider>
   );
