@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useTransaction } from '../contexts/transactionContext';
 import { useModal } from '../contexts/modalContext';
+import { patchUpdateTransaction } from '../js/api-service';
 
 import { expenseCategory, incomeCategory } from '../js/categories';
 
 export default function Modal() {
-  const { handleCloseModal, editTrans } = useModal();
-  const [editType, setEditType] = useState('');
-  const [editCategory, setEditCategory] = useState('');
+  const { closeModal, editTrans } = useModal();
+  const { updateTransaction } = useTransaction();
+  const [editType, setEditType] = useState(editTrans ? editTrans.type : '');
+  const [editCategory, setEditCategory] = useState(
+    editTrans ? editTrans.category : ''
+  );
   console.log(editTrans);
 
   useEffect(() => {
@@ -16,6 +21,37 @@ export default function Modal() {
     }
   }, [editTrans]);
   console.log(editType);
+
+  const editFormRef = useRef();
+
+  function mergeUpdatedTransAndOldTrans(newTrans) {
+    for (const property in newTrans) {
+      if (newTrans.hasOwnProperty(property)) {
+        editTrans[property] = newTrans[property];
+      }
+    }
+    return editTrans;
+  }
+
+  function editCurrentTransaction(event) {
+    event.preventDefault();
+    const formData = new FormData(editFormRef.current);
+
+    const data = Object.fromEntries(formData.entries());
+
+    const updatedData = mergeUpdatedTransAndOldTrans(data);
+    console.log(updatedData);
+    //Update Trans in server
+    patchUpdateTransaction(updatedData, editTrans._id);
+
+    //Update Trans in UI
+    updateTransaction(updatedData);
+
+    //Close Modal
+    closeModal('transaction-modal');
+    try {
+    } catch (err) {}
+  }
 
   function handleEditTypeChange(e) {
     e.preventDefault();
@@ -28,6 +64,11 @@ export default function Modal() {
     setEditCategory(e.target.value);
   }
 
+  function handleCloseModal(e) {
+    e.preventDefault();
+    closeModal('transaction-modal');
+  }
+
   return (
     <div id="transaction-modal" className="displayNone">
       {editTrans !== undefined ? (
@@ -37,12 +78,14 @@ export default function Modal() {
               action=""
               method="get"
               className="form-transaction transaction-modal-content"
+              ref={editFormRef}
+              onSubmit={editCurrentTransaction}
             >
               <div className="flex-space-between">
                 <span>Edit Transaction</span>
                 <button
                   className="closeButton"
-                  onClick={(e) => handleCloseModal(e, 'transaction-modal')}
+                  onClick={(e) => handleCloseModal(e)}
                 >
                   <span>&times;</span>
                 </button>
@@ -53,7 +96,7 @@ export default function Modal() {
                   name="type"
                   id="editType"
                   required
-                  defaultValue={editTrans.type}
+                  value={editType}
                   onChange={handleEditTypeChange}
                 >
                   <option value="" disabled>
@@ -66,6 +109,7 @@ export default function Modal() {
               <div>
                 <label htmlFor="value">Value: </label>
                 <input
+                  name="value"
                   type="number"
                   id="value"
                   placeholder="amount"
@@ -78,13 +122,13 @@ export default function Modal() {
                   name="category"
                   id="category"
                   required
-                  defaultValue={editTrans.category}
+                  value={editCategory}
                   onChange={handleEditCategory}
                 >
                   <option value="" disabled>
                     --Please choose a category
                   </option>
-                  {(editTrans.type === 'Expense'
+                  {(editType === 'Expense'
                     ? expenseCategory
                     : incomeCategory
                   ).map((el) => (
@@ -107,6 +151,7 @@ export default function Modal() {
               <div>
                 <label htmlFor="tag">Tag: </label>
                 <input
+                  name="tag"
                   type="text"
                   placeholder="note"
                   id="tag"
@@ -114,7 +159,9 @@ export default function Modal() {
                 />
               </div>
               <div className="flex-space-between">
-                <button className="btn">Save Transaction</button>
+                <button className="btn" type="submit">
+                  Save Transaction
+                </button>
                 <button className="btn ">Delete Transaction</button>
               </div>
             </form>
