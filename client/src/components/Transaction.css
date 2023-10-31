@@ -72,12 +72,13 @@
 }
 
 .confirm-delete-modal {
-  display: none;
+  /* display: none; */
+  z-index: 4;
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.confirm-delete div {
-  display: none;
+.confirm-delete-content {
+  /* display: none; */
   background-color: #fefefe;
   border-radius: 1rem;
   text-align: center;
@@ -85,6 +86,6 @@
   margin: 0 auto;
   width: 36rem;
 }
-.confirm-delete button {
+.confirm-delete-content button {
   margin: 1rem 1rem 0rem;
 }
