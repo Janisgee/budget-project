@@ -63,14 +63,18 @@ export default function EachDateTransaction() {
 }
 
 const TransactionRow = ({ transaction }) => {
-  const { handleShowModal } = useModal();
+  const { selectTransaction, showModal } = useModal();
+
+  function handleSelectTransaction(e) {
+    e.preventDefault();
+    selectTransaction(transaction);
+    showModal('transaction-modal');
+  }
 
   return (
     <button
       className="each-transaction-select"
-      onClick={(e) => {
-        handleShowModal(e, 'transaction-modal', transaction);
-      }}
+      onClick={handleSelectTransaction}
     >
       <div className="flex-space-between">
         <div>
