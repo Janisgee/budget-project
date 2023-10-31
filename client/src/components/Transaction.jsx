@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useTransaction } from '../contexts/transactionContext';
 
 import EachDateTransaction from './EachDateTransaction';
@@ -15,33 +16,39 @@ export default function Transaction() {
     monthFiler,
   } = useTransaction();
 
+  const [monthList, setMonthList] = useState([]);
+
   // const { showModal } = useModal();
 
   const periodBalance = incomeSum - expenseSum;
 
+  console.log(monthList);
+  useEffect(() => {
+    function getPreviousMonthSelection() {
+      const passMonthList = [];
+      const currentDate = new Date();
+      for (let i = 0; i < 18; i++) {
+        // Push the formatted date to the array
+        const previousMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() - i,
+          1
+        );
+        passMonthList.push(formatDate(previousMonth));
+      }
+      setMonthList(passMonthList);
+    }
+    getPreviousMonthSelection();
+  }, []);
+
   function formatDate(date) {
     const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
-    const newDate = new Date(date).toLocaleDateString('en-au', option);
+    const newDate = new Date(date).toLocaleDateString(undefined, option);
     return newDate;
   }
 
-  function getPreviousMonthSelection() {
-    const passMonthList = [];
-    const currentDate = new Date();
-    for (let i = 0; i < 18; i++) {
-      // Create a new Date object for the previous month
-      const previousMonth = new Date(currentDate);
-      previousMonth.setMonth(currentDate.getMonth() - i);
-      passMonthList.push(formatDate(previousMonth));
-    }
-    return passMonthList;
-  }
-  getPreviousMonthSelection();
-
   function getDay(date) {
-    const today = new Date(date).toLocaleString('en-AU', {
-      timeZone: 'Asia/Hong_Kong',
-    });
+    const today = new Date(date).toLocaleString();
     const newDate = today.split(',')[0];
     return newDate;
   }
@@ -64,7 +71,7 @@ export default function Transaction() {
             onChange={handleMonthFilter}
           >
             <option value="All Time">All Time</option>
-            {getPreviousMonthSelection().map((month, i) => (
+            {monthList.map((month, i) => (
               <option value={month} key={i}>
                 {month}
               </option>
