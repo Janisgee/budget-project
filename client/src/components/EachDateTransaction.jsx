@@ -41,7 +41,6 @@ export default function EachDateTransaction() {
   return (
     <div className="each-transactions">
       {datedTransactions.map(({ day, transactions, dayTotal }) => {
-        console.log(datedTransactions);
         return (
           <div key={day}>
             <div className="flex-space-between ">
