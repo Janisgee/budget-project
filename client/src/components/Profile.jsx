@@ -3,11 +3,13 @@ import './Profile.css';
 import './css/form.css';
 
 import { useOverview } from '../contexts/overviewContext';
+import { useTransaction } from '../contexts/transactionContext';
 import { expenseCategory, incomeCategory } from '../js/categories';
 import { postNewTransaction } from '../js/api-service';
 
 export default function Profile({ toggle }) {
   const { allTransactionBalance, expenseSum, incomeSum } = useOverview();
+  const { createTransaction } = useTransaction();
   const [addNewTransaction, setAddNewTransaction] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState();
 
@@ -19,10 +21,15 @@ export default function Profile({ toggle }) {
 
     const data = Object.fromEntries(formData.entries());
 
-    postNewTransaction(data);
+    //Add new transaction to server
+    await postNewTransaction(data);
 
-    try {
-    } catch (err) {}
+    console.log(data);
+    //Add new transaction to UI
+    createTransaction();
+
+    //Close form
+    setAddNewTransaction(false);
   }
 
   function handleAddNewTransaction() {

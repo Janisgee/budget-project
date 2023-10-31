@@ -14,21 +14,21 @@ function AppAfterLogin() {
 
   return (
     <OverviewProvider>
-      <div className="App">
-        <div className="walletPage">
-          <div className="wallet-child-1">
-            <NavBarAfterLogin toggle={toggle} ontoggle={setToggle} />
-            <TransactionProvider>
+      <TransactionProvider>
+        <div className="App">
+          <div className="walletPage">
+            <div className="wallet-child-1">
+              <NavBarAfterLogin toggle={toggle} ontoggle={setToggle} />
               <ModalProvider>
                 <Outlet />
               </ModalProvider>
-            </TransactionProvider>
-          </div>
-          <div className="wallet-child-2">
-            <Profile toggle={toggle} />
+            </div>
+            <div className="wallet-child-2">
+              <Profile toggle={toggle} />
+            </div>
           </div>
         </div>
-      </div>
+      </TransactionProvider>
     </OverviewProvider>
   );
 }
