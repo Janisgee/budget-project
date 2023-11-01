@@ -75,15 +75,16 @@ const TransactionRow = ({ transaction }) => {
       className="each-transaction-select"
       onClick={handleSelectTransaction}
     >
-      <div className="flex-space-between">
-        <div>
-          <span className="each-transaction-title strong-font">
-            {transaction.category}
-          </span>
-          <span>🏷️</span>
+      <div className="each-transaction-line">
+        <div className="each-transaction-title strong-font">
+          {transaction.category.padEnd(25, '')}
+        </div>
+        <div className="each-transaction-tag">
+          <span className="text-icon">🏷️</span>
           <span>{transaction.tag}</span>
         </div>
-        <div>
+
+        <div className="each-transaction-value">
           {transaction.type === 'Income'
             ? `+$${transaction.value}`
             : `-$${transaction.value}`}

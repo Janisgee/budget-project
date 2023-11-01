@@ -10,10 +10,6 @@
   padding: 0.5vh 0.5vw;
 }
 
-.each-transaction-title {
-  margin-right: 1rem;
-}
-
 .each-transaction-select {
   text-decoration: none;
   color: black;
@@ -39,4 +35,22 @@
   outline: inherit;
   display: block;
   width: 100%;
+}
+
+.each-transaction-line {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  background-color: #efeae4;
+  margin-bottom: 4px;
+}
+
+.each-transaction-title,
+.each-transaction-tag {
+  display: inline-block;
+  text-align: left;
+}
+
+.each-transaction-value {
+  display: inline-block;
+  text-align: right;
 }
