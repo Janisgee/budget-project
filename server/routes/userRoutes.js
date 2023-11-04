@@ -16,6 +16,8 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 router.use(authController.protect);
 
+router.get('/me', userController.getMe);
+
 router.patch('/updateMyPassword', authController.updatePassword);
 router.patch('/updateMe', userController.updateMe);
 

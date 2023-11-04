@@ -96,3 +96,17 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.getMe = catchAsync(async (req, res, next) => {
+  const user = req.user;
+
+  if (!user) {
+    return next(new AppError('User is not logged in yet.', 401));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});
