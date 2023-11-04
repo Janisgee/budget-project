@@ -59,3 +59,23 @@
 .closeButton:hover {
   cursor: pointer;
 }
+
+.settingButton {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  color: grey;
+}
+
+.settingButton:hover {
+  cursor: pointer;
+}
+
+.settingButton:active {
+  color: rgb(26, 26, 26);
+}
+
+.passwordButton {
+  display: block;
+  float: right;
+}
