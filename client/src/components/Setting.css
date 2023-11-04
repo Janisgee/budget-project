@@ -1,0 +1,113 @@
+.setting-container {
+  padding: 2vh 7vw;
+}
+
+.wrapper {
+  margin: 4rem 10rem;
+}
+
+.scroll-wrapper {
+  overflow: auto;
+  height: 83vh;
+}
+
+.setting-heading {
+  font-size: 1.6rem;
+}
+
+.settingForm {
+  margin: 1rem auto;
+}
+
+.settingFormGroup {
+  margin-bottom: 1rem;
+}
+
+.settingForm__label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.settingform__input {
+  display: block;
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  padding: 0.5rem 1.75rem;
+  border: none;
+  width: 100%;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.settingform__input:focus {
+  outline: none;
+  border-bottom: 3px solid blueviolet;
+}
+.settingform__input:focus:invalid {
+  border-bottom: 3px solid #fa4848;
+}
+.settingform__input::-webkit-input-placeholder {
+  color: #bbb;
+}
+
+.settingForm_End {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settingForm_End a {
+  height: 1rem;
+}
+
+.imageSet {
+}
+
+.settingform_UserImage {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  margin-right: 2rem;
+}
+
+.settingform__ImageUpload {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.settingform__ImageUpload:focus + label {
+  outline: 3px solid blueviolet;
+  outline-offset: 3px;
+}
+
+.settingform__ImageUpload + label {
+  color: blueviolet;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid blueviolet;
+  padding: 3px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.settingform__ImageUpload + label:hover {
+  background-color: blueviolet;
+  color: #fff;
+  -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
