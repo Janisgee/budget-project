@@ -1,5 +1,7 @@
 import './css/btn.css';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBarAfterLogin({ toggle, ontoggle }) {
   const handleToggleChange = (e) => {
@@ -28,6 +30,9 @@ export default function NavBarAfterLogin({ toggle, ontoggle }) {
           onClick={(e) => handleToggleChange(e)}
         >
           Transaction
+        </Link>
+        <Link to="/user/setting" className="settingButton">
+          <FontAwesomeIcon icon={faGear} />
         </Link>
         <Link to="/" className="link btn">
           Log&nbsp;Out

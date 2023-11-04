@@ -6,8 +6,9 @@ import Main from './Main';
 import SignUp from './SignUp';
 
 import AppAfterLogin from './AppAfterLogin';
-import Overview from './Overview';
+import Overview from './Overview.jsx';
 import Transaction from './Transaction.jsx';
+import Setting from './Setting.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/user/overview', element: <Overview /> },
       { path: '/user/transaction', element: <Transaction /> },
+      { path: '/user/setting', element: <Setting /> },
     ],
   },
 ]);
