@@ -48,13 +48,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // Create token for user to signup
   createSendToken(newUser, 201, res);
-  // const token = signToken(newUser._id);
-
-  // res.status(201).json({
-  //   status: 'success',
-  //   token,
-  //   data: { user: newUser },
-  // });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -77,26 +70,21 @@ exports.login = catchAsync(async (req, res, next) => {
     );
   // If everything ok, send token to client.
   createSendToken(user, 200, res);
-
-  // const token = signToken(user._id);
-
-  // res.status(200).json({
-  //   status: 'success',
-  //   token,
-  // });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
   //Get a token and check if it is there.
   let token;
   console.log(req.headers.authorization);
+  console.log(req.cookies);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwtBudget) {
+    token = req.cookies.jwtBudget;
   }
-  console.log(token);
 
   if (!token)
     return next(
@@ -106,7 +94,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   //Verify the token and check if someone manipulate it. or it has been expired.
   const asyncJWTVerify = promisify(jwt.verify);
   const decoded = await asyncJWTVerify(token, process.env.JWT_SECRET);
-  console.log(decoded);
 
   //Check if the user still exist
   const currentUser = await User.findById(decoded.id);
@@ -123,14 +110,44 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   //Grand access if everything ok.
   req.user = currentUser;
+  res.locals.user = currentUser;
+
+  next();
+});
+
+//Middleware to check if user has been logged in
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) return next();
+
+    if (currentUser.changePasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    res.locals.user = currentUser;
+    return next();
+  }
+  if (req.cookies.jwt === 'Logged out!') {
+    return next();
+  }
   next();
 });
 
 exports.restrictTo = (...roles) => {
+  //below function can access to roles as closure
   return (req, res, next) => {
+    // This is middleware function
+    //roles ['admin','lead-guide']. role='user'
+    //403 - forbidden
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('You do not have permission to perform this action.', 403),
+        new AppError('You do not have permission to perform this action', 403),
       );
     }
     next();

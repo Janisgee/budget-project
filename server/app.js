@@ -10,6 +10,7 @@ const cors = require('cors');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
+const cookieParser = require('cookie-parser');
 const adminRouter = require('./routes/adminRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -18,7 +19,12 @@ const app = express();
 // 1)MIDDLEWARES
 //Middleware to helps secure Express apps by setting HTTP response headers
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+    credentials: true,
+  }),
+);
 
 //Middleware to allow us to see request data in console and limited access with only environment = development
 console.log(process.env.NODE_ENV);
@@ -30,6 +36,9 @@ if (process.env.NODE_ENV === 'development') {
 //and limit the body size not bigger than 10kb
 app.use(express.json({ limit: '10kb' }));
 
+//Reading data from cookies
+app.use(cookieParser());
+
 //Middleware for Rating Limit for each IP
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, //60mins
@@ -38,6 +47,8 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
+
+//
 
 //Middleware to santize req.body, req.query and req.params
 //Santize any $ and . sign

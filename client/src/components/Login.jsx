@@ -40,7 +40,7 @@ export default function Login() {
             name="email"
             id="email"
             autoComplete="on"
-            value="user1@gmail.com"
+            value="user2@gmail.com"
             onChange={(e) => e.target.value}
           />
         </div>

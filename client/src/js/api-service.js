@@ -3,8 +3,34 @@ import { showAlert } from '../js/alerts';
 let token;
 let userId;
 
+export function getUserData(data) {
+  return data;
+}
+
 export function isLoggedIn() {
   return token != null;
+}
+
+export async function checkIsLoggedIn() {
+  const response = await fetch('http://localhost:3000/api/v1/users/me', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      // Authorization: 'Bearer ' + token,
+    },
+    credentials: 'include',
+  });
+
+  if (response.status === 200) {
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } else {
+    return responseError(
+      response,
+      'Fail to get user information, user is not logged in yet.'
+    );
+  }
 }
 
 export async function doLogin(email, password) {
@@ -14,6 +40,7 @@ export async function doLogin(email, password) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
+    credentials: 'include',
   });
 
   if (response.status === 200) {
@@ -42,9 +69,10 @@ export async function postNewTransaction(data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        // Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify(data),
+      credentials: 'include',
     }
   );
   console.log(response);
@@ -72,9 +100,10 @@ export async function patchUpdateTransaction(data) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        // Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify(data),
+      credentials: 'include',
     }
   );
   console.log(response);
@@ -99,8 +128,9 @@ export async function deleteServerTransaction(transactionId) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        // Authorization: 'Bearer ' + token,
       },
+      credentials: 'include',
     }
   );
   console.log(response);
@@ -130,8 +160,9 @@ export async function getAllTransactions(start = undefined, end = undefined) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
+      // Authorization: 'Bearer ' + token,
     },
+    credentials: 'include',
   });
 
   if (response.status === 200) {
@@ -155,8 +186,9 @@ export async function getTransactionStats(start, end, type) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
+      // Authorization: 'Bearer ' + token,
     },
+    credentials: 'include',
   });
   if (response.status === 200) {
     const data = await response.json();
@@ -179,8 +211,9 @@ export async function getTransactionSummary(start, end) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
+      // Authorization: 'Bearer ' + token,
     },
+    credentials: 'include',
   });
   if (response.status === 200) {
     const data = await response.json();

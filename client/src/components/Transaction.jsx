@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTransaction } from '../contexts/transactionContext';
+import { useAuth } from '../contexts/authContext';
 
 import EachDateTransaction from './EachDateTransaction';
 import Modal from './Modal';
@@ -15,6 +16,7 @@ export default function Transaction() {
     selectedMonth,
     monthFiler,
   } = useTransaction();
+  const { user, formatUserName } = useAuth();
 
   const [monthList, setMonthList] = useState([]);
 
@@ -63,7 +65,7 @@ export default function Transaction() {
         {/* {showModal ? <Modal /> : ''} */}
         <Modal />
         <span className="transaction-heading">
-          <h3>Cameron's Account</h3>
+          <h3>{formatUserName(user.name)}'s Account</h3>
           <select
             name="transaction-sort-by-month"
             className="btn"

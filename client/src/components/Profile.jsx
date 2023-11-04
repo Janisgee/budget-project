@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import './Profile.css';
 import './css/form.css';
 
+import { useAuth } from '../contexts/authContext';
 import { useOverview } from '../contexts/overviewContext';
 import { useTransaction } from '../contexts/transactionContext';
 import { expenseCategory, incomeCategory } from '../js/categories';
@@ -9,6 +10,7 @@ import { postNewTransaction } from '../js/api-service';
 
 export default function Profile({ toggle }) {
   const { allTransactionBalance, expenseSum, incomeSum } = useOverview();
+  const { user, formatUserName } = useAuth();
   const { createTransaction } = useTransaction();
   const [addNewTransaction, setAddNewTransaction] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState();
@@ -44,7 +46,7 @@ export default function Profile({ toggle }) {
   return (
     <div className="profile-container">
       <div className="profile">
-        <h3>Welcome back, Cameron !</h3>
+        <h3>Welcome back, {formatUserName(user.name)} !</h3>
         <img src="https://i.pravatar.cc/50" alt="Cameron" />
       </div>
       {toggle ? (
