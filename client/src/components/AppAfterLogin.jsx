@@ -10,7 +10,7 @@ import { TransactionProvider } from '../contexts/transactionContext';
 import { ModalProvider } from '../contexts/modalContext';
 
 function AppAfterLogin() {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState('Overview');
 
   return (
     <OverviewProvider>

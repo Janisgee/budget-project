@@ -6,9 +6,11 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 export default function NavBarAfterLogin({ toggle, ontoggle }) {
   const handleToggleChange = (e) => {
     if (e.target.textContent === 'Overview') {
-      ontoggle(true);
+      ontoggle('Overview');
+    } else if (e.target.textContent === 'Transaction') {
+      ontoggle('Transaction');
     } else {
-      ontoggle(false);
+      ontoggle('Setting');
     }
   };
   return (
@@ -19,19 +21,31 @@ export default function NavBarAfterLogin({ toggle, ontoggle }) {
       <div className="btn-group">
         <Link
           to="/user/overview"
-          className={toggle ? 'link btn-overview active' : 'link btn-overview'}
+          className={
+            toggle === 'Overview'
+              ? 'link btn-overview active'
+              : 'link btn-overview'
+          }
           onClick={(e) => handleToggleChange(e)}
         >
           Overview
         </Link>
         <Link
           to="/user/transaction"
-          className={toggle ? 'link btn-overview ' : 'link btn-overview active'}
+          className={
+            toggle === 'Transaction'
+              ? 'link btn-overview active'
+              : 'link btn-overview'
+          }
           onClick={(e) => handleToggleChange(e)}
         >
           Transaction
         </Link>
-        <Link to="/user/setting" className="settingButton">
+        <Link
+          to="/user/setting"
+          className="settingButton"
+          onClick={(e) => handleToggleChange(e)}
+        >
           <FontAwesomeIcon icon={faGear} />
         </Link>
         <Link to="/" className="link btn">

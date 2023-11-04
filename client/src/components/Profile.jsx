@@ -49,7 +49,7 @@ export default function Profile({ toggle }) {
         <h3>Welcome back, {formatUserName(user.name)} !</h3>
         <img src="https://i.pravatar.cc/50" alt="Cameron" />
       </div>
-      {toggle ? (
+      {toggle === 'Overview' && (
         <ul className="total">
           <li className="list flex-space-between">
             <h3>🐖 Wallet Balance</h3>
@@ -68,7 +68,8 @@ export default function Profile({ toggle }) {
             <p>+${incomeSum}</p>
           </li>
         </ul>
-      ) : (
+      )}
+      {toggle === 'Transaction' && (
         <div>
           {addNewTransaction ? (
             ''
@@ -162,6 +163,7 @@ export default function Profile({ toggle }) {
           )}
         </div>
       )}
+      {toggle === 'Setting' && ''}
     </div>
   );
 }
