@@ -17,8 +17,8 @@ export default function Profile({ toggle }) {
 
   const formRef = useRef();
 
-  async function createNewTransaction(event) {
-    event.preventDefault();
+  async function createNewTransaction(e) {
+    e.preventDefault();
     const formData = new FormData(formRef.current);
 
     const data = Object.fromEntries(formData.entries());
@@ -42,12 +42,13 @@ export default function Profile({ toggle }) {
     if (e.target.value === undefined) return;
     setNewTransactionType(e.target.value);
   }
+  console.log(user);
 
   return (
     <div className="profile-container">
       <div className="profile">
         <h3>Welcome back, {formatUserName(user.name)} !</h3>
-        <img src="https://i.pravatar.cc/50" alt="Cameron" />
+        <img src={`/img/users/${user.photo}`} alt="Cameron" />
       </div>
       {toggle === 'Overview' && (
         <ul className="total">
