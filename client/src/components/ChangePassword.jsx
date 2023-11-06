@@ -10,7 +10,7 @@ export default function ChangePassword() {
       </div>
       <form className="settingForm">
         <div className="settingFormGroup">
-          <label forHtml="currentPassword" className="settingForm__label">
+          <label forhtml="currentPassword" className="settingForm__label">
             Current Password
           </label>
           <input
@@ -23,7 +23,7 @@ export default function ChangePassword() {
           ></input>
         </div>
         <div className="settingFormGroup">
-          <label forHtml="newPassword" className="settingForm__label">
+          <label forhtml="newPassword" className="settingForm__label">
             New Password
           </label>
           <input
@@ -36,7 +36,7 @@ export default function ChangePassword() {
           ></input>
         </div>
         <div className="settingFormGroup">
-          <label forHtml="confirmPassword" className="settingForm__label">
+          <label forhtml="confirmPassword" className="settingForm__label">
             Confirm Password
           </label>
           <input
@@ -48,7 +48,7 @@ export default function ChangePassword() {
             minLength="8"
           ></input>
         </div>
-        <a class="link btn passwordButton" href="/">
+        <a className="link btn passwordButton" href="/">
           Save&nbsp;Password
         </a>
       </form>
