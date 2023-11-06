@@ -37,6 +37,12 @@ function AuthProvider({ children }) {
     dispatch({ type: 'loginIsTrue', payload: userData });
   }
 
+  //Update user data
+  function updateUser(oldUserData, newUserData) {
+    const updatedData = Object.assign({}, oldUserData, newUserData);
+    dispatch({ type: 'loginIsTrue', payload: updatedData });
+  }
+
   function formatUserName(name) {
     const userName = name.toLowerCase();
     const firstLetter = userName.charAt(0);
@@ -54,6 +60,7 @@ function AuthProvider({ children }) {
         loading,
         isLoggedIn,
         isAuthenticated,
+        updateUser,
         getLoginUserData,
         formatUserName,
       }}
