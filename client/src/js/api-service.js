@@ -60,9 +60,6 @@ export async function doLogin(email, password) {
 }
 
 export async function postNewTransaction(data) {
-  console.log(data);
-  console.log(JSON.stringify(data));
-
   const response = await fetch(
     `http://localhost:3000/api/v1/users/${userId}/transaction`,
     {
@@ -75,7 +72,6 @@ export async function postNewTransaction(data) {
       credentials: 'include',
     }
   );
-  console.log(response);
 
   if (response.status === 201) {
     showAlert('success', 'New transaction has been made!', 3);
@@ -91,9 +87,6 @@ export async function postNewTransaction(data) {
 }
 
 export async function patchUpdateTransaction(data) {
-  console.log(data);
-  console.log(JSON.stringify(data));
-
   const response = await fetch(
     `http://localhost:3000/api/v1/users/${userId}/transaction/${data._id}`,
     {
@@ -236,4 +229,29 @@ async function responseError(response, msg) {
   );
 }
 
-export function getCategoryList(type) {}
+export async function patchUpdateMe(data) {
+  console.log(data);
+  console.log(JSON.stringify(data));
+
+  const response = await fetch(`http://localhost:3000/api/v1/users/updateMe`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    credentials: 'include',
+  });
+  console.log(response);
+
+  if (response.status === 200) {
+    showAlert('success', 'Your account settings have been updated!', 3);
+  } else {
+    throw new Error(
+      showAlert(
+        'error',
+        'Fail to update your account settings, please try again later.',
+        3
+      )
+    );
+  }
+}
