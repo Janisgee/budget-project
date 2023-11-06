@@ -5,7 +5,7 @@ import ChangePassword from './ChangePassword';
 
 export default function Setting() {
   return (
-    <div className="setting-container ">
+    <div className="setting-container container">
       <div className="scroll-wrapper">
         <Account />
         <hr />

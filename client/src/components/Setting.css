@@ -33,7 +33,7 @@
   display: block;
   font-family: inherit;
   font-size: 1rem;
-  color: inherit;
+  color: #6e6e6e;
   padding: 0.5rem 1.75rem;
   border: none;
   width: 100%;
@@ -55,9 +55,9 @@
 .settingform__input:focus:invalid {
   border-bottom: 3px solid #fa4848;
 }
-.settingform__input::-webkit-input-placeholder {
-  color: #bbb;
-}
+/* .settingform__input::-webkit-input-defaultvalue {
+  color: #646464;
+} */
 
 .settingForm_End {
   display: flex;
@@ -67,9 +67,6 @@
 
 .settingForm_End a {
   height: 1rem;
-}
-
-.imageSet {
 }
 
 .settingform_UserImage {
@@ -85,7 +82,7 @@
   opacity: 0;
   overflow: hidden;
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .settingform__ImageUpload:focus + label {
