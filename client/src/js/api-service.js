@@ -26,10 +26,7 @@ export async function checkIsLoggedIn() {
     console.log(data);
     return data;
   } else {
-    return responseError(
-      response,
-      'Fail to get user information, user is not logged in yet.'
-    );
+    return;
   }
 }
 
@@ -49,6 +46,7 @@ export async function doLogin(email, password) {
     userId = body.data.user._id;
     showAlert('success', 'Logged in successfully!');
     getAllTransactions();
+    return body.data;
   } else {
     throw new Error(
       showAlert(
@@ -56,6 +54,26 @@ export async function doLogin(email, password) {
         'Log in fail. Please fill in a valid email and password!'
       )
     );
+  }
+}
+
+export async function logout() {
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/users/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: 'Bearer ' + token,
+      },
+      credentials: 'include',
+    });
+
+    if (response.status === 200) {
+      //Reload the page manually(force reload from server, not from browser)
+      window.location.reload(true);
+    }
+  } catch (err) {
+    showAlert('error', 'Error logging out! Try again.');
   }
 }
 
@@ -246,12 +264,7 @@ export async function patchUpdateMe(data) {
   if (response.status === 200) {
     showAlert('success', 'Your account settings have been updated!', 3);
   } else {
-    throw new Error(
-      showAlert(
-        'error',
-        'Fail to update your account settings, please try again later.',
-        3
-      )
-    );
+    const body = await response.json();
+    throw new Error(body.message);
   }
 }
