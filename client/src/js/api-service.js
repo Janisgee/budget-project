@@ -1,15 +1,6 @@
 import { showAlert } from '../js/alerts';
 
-let token;
 let userId;
-
-export function getUserData(data) {
-  return data;
-}
-
-export function isLoggedIn() {
-  return token != null;
-}
 
 export async function checkIsLoggedIn() {
   const response = await fetch('http://localhost:3000/api/v1/users/me', {
@@ -23,10 +14,9 @@ export async function checkIsLoggedIn() {
 
   if (response.status === 200) {
     const data = await response.json();
+    userId = data.data.user._id;
     console.log(data);
     return data;
-  } else {
-    return;
   }
 }
 
@@ -42,7 +32,6 @@ export async function doLogin(email, password) {
 
   if (response.status === 200) {
     const body = await response.json();
-    token = body.token;
     userId = body.data.user._id;
     showAlert('success', 'Logged in successfully!');
     getAllTransactions();
