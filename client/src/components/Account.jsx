@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { patchUpdateMe } from '../js/api-service';
+import { showAlert } from '../js/alerts';
 
 export default function Account() {
   const { user, updateUser } = useAuth();
@@ -24,9 +25,14 @@ export default function Account() {
     }
     console.log(file);
 
-    //Update user information to server
-    await patchUpdateMe(data);
-
+    try {
+      //Update user information to server
+      await patchUpdateMe(data);
+    } catch (err) {
+      console.log(err);
+      showAlert('error', err.message, 3);
+      return;
+    }
     //Update user information UI
     updateUser(user, data);
 
@@ -34,6 +40,7 @@ export default function Account() {
   }
 
   function handlePhotoChange(e) {
+    if (e.target.files.length < 1) return;
     const newPhotoName = e.target.files[0].name;
     setFile(newPhotoName);
     e.preventDefault();
