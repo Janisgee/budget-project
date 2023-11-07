@@ -9,16 +9,23 @@ export default function NavBar() {
   const navigate = useNavigate();
   async function handleLogin(e) {
     e.preventDefault();
-    const response = await checkIsLoggedIn();
-    console.log(response.status);
-    if (response.status === 'success') {
-      const userData = response.data.user;
-      console.log(userData);
-      getLoginUserData(userData);
-      navigate('/user/overview');
-    } else {
+    try {
+      const response = await checkIsLoggedIn();
+      console.log(response.status);
+      if (response.status === 'success') {
+        const userData = response.data.user;
+        console.log(userData);
+        getLoginUserData(userData);
+        navigate('/user/overview');
+      }
+    } catch (err) {
       navigate('/login');
     }
+  }
+
+  function handleSignup(e) {
+    e.preventDefault();
+    navigate('/signup');
   }
 
   return (
@@ -30,9 +37,10 @@ export default function NavBar() {
         <button className="btn btn-login" onClick={handleLogin}>
           Login
         </button>
-        <a href="/signup">
-          <button className="btn btn-signup">Sign Up</button>
-        </a>
+
+        <button className="btn btn-signup" onClick={handleSignup}>
+          Sign Up
+        </button>
       </div>
     </nav>
   );

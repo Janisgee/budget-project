@@ -7,9 +7,12 @@
   flex-direction: column;
   gap: 2rem;
   color: white;
-
   width: 20rem;
   margin: 6rem auto;
+}
+
+.signupForm {
+  margin: 3.5rem auto;
 }
 
 .row {
