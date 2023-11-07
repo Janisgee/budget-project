@@ -4,6 +4,7 @@ import AppBeforeLogin from './AppBeforeLogin';
 import Login from './Login';
 import Main from './Main';
 import SignUp from './SignUp';
+import ErrorPage from './ErrorPageBeforeLogin';
 
 import AppAfterLogin from './AppAfterLogin';
 import Overview from './Overview.jsx';
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <AppBeforeLogin />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/login',
@@ -32,6 +34,7 @@ export const router = createBrowserRouter([
   {
     path: '/user',
     element: <AppAfterLogin />,
+    errorElement: <ErrorPage />,
     children: [
       { path: '/user/overview', element: <Overview /> },
       { path: '/user/transaction', element: <Transaction /> },
