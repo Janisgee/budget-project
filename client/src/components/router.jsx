@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, redirect, Navigate } from 'react-router-dom';
 
 import AppBeforeLogin from './AppBeforeLogin';
 import Login from './Login';
@@ -10,6 +10,7 @@ import AppAfterLogin from './AppAfterLogin';
 import Overview from './Overview.jsx';
 import Transaction from './Transaction.jsx';
 import Setting from './Setting.jsx';
+import { checkIsLoggedIn } from '../js/api-service';
 
 export const router = createBrowserRouter([
   {
@@ -18,15 +19,15 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/login',
+        path: 'login',
         element: <Login />,
       },
       {
-        path: '/signup',
+        path: 'signup',
         element: <SignUp />,
       },
       {
-        path: '/',
+        path: '',
         element: <Main />,
       },
     ],
@@ -35,10 +36,22 @@ export const router = createBrowserRouter([
     path: '/user',
     element: <AppAfterLogin />,
     errorElement: <ErrorPage />,
+    loader: async () => {
+      const me = await checkIsLoggedIn();
+      if (me) {
+        return me.data.user;
+      } else {
+        return redirect('/login');
+      }
+    },
     children: [
-      { path: '/user/overview', element: <Overview /> },
-      { path: '/user/transaction', element: <Transaction /> },
-      { path: '/user/setting', element: <Setting /> },
+      { path: 'overview', element: <Overview /> },
+      { path: 'transaction', element: <Transaction /> },
+      { path: 'setting', element: <Setting /> },
+      {
+        path: '',
+        element: <Navigate to="/user/overview" replace={true} />,
+      },
     ],
   },
 ]);

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/authContext';
 import './App.css';
 import NavBarAfterLogin from './NavBarAfterLogin.jsx';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import Profile from './Profile';
 
 // import { getAllTransactions } from '../js/api-service';
@@ -10,7 +11,14 @@ import { TransactionProvider } from '../contexts/transactionContext';
 import { ModalProvider } from '../contexts/modalContext';
 
 function AppAfterLogin() {
+  const { getLoginUserData } = useAuth();
   const [toggle, setToggle] = useState('Overview');
+  const user = useLoaderData();
+  console.log(user);
+
+  useEffect(() => {
+    getLoginUserData(user);
+  }, []);
 
   return (
     <OverviewProvider>
