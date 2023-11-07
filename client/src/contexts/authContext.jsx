@@ -3,6 +3,7 @@ import { createContext, useContext, useReducer } from 'react';
 const AuthContext = createContext();
 const initalState = {
   user: {},
+  userName: '',
   loading: false,
   isLoggedIn: false,
   isAuthenticated: false,
@@ -14,6 +15,8 @@ function reducer(state, action) {
       return { ...state, loading: true };
     case 'loaded':
       return { ...state, loading: false };
+    case 'getUserName':
+      return { ...state, userName: action.payload };
     case 'loginIsTrue':
       return {
         ...state,
@@ -31,10 +34,18 @@ function reducer(state, action) {
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initalState);
 
-  const { user, loading, isLoggedIn, isAuthenticated } = state;
+  const { user, userName, loading, isLoggedIn, isAuthenticated } = state;
 
   function getLoginUserData(userData) {
     dispatch({ type: 'loginIsTrue', payload: userData });
+  }
+
+  function getUserName(name) {
+    dispatch({ type: 'getUserName', payload: name });
+  }
+
+  function logoutUserData() {
+    dispatch({ type: 'loginIsFalse' });
   }
 
   //Update user data
@@ -43,26 +54,18 @@ function AuthProvider({ children }) {
     dispatch({ type: 'loginIsTrue', payload: updatedData });
   }
 
-  function formatUserName(name) {
-    const userName = name.toLowerCase();
-    const firstLetter = userName.charAt(0);
-    const firstLetterCap = firstLetter.toUpperCase();
-    const remainingLetters = userName.slice(1);
-    const capitalizedName = firstLetterCap + remainingLetters;
-
-    return capitalizedName;
-  }
-
   return (
     <AuthContext.Provider
       value={{
         user,
+        userName,
         loading,
         isLoggedIn,
         isAuthenticated,
         updateUser,
+        getUserName,
         getLoginUserData,
-        formatUserName,
+        logoutUserData,
       }}
     >
       {children}

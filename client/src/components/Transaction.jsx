@@ -16,7 +16,7 @@ export default function Transaction() {
     selectedMonth,
     monthFiler,
   } = useTransaction();
-  const { user, formatUserName } = useAuth();
+  const { user, userName } = useAuth();
 
   const [monthList, setMonthList] = useState([]);
 
@@ -65,7 +65,7 @@ export default function Transaction() {
         {/* {showModal ? <Modal /> : ''} */}
         <Modal />
         <span className="transaction-heading">
-          <h3>{formatUserName(user.name)}'s Account</h3>
+          <h3>{userName}'s Account</h3>
           <select
             name="transaction-sort-by-month"
             className="btn"
