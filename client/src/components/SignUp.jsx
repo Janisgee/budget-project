@@ -3,7 +3,7 @@ import './css/form.css';
 export default function SignUp() {
   return (
     <div className="container">
-      <form className="form">
+      <form className="form signupForm">
         <h2>✒️ Sign Up</h2>
         <div className="row">
           <label htmlFor="name">User Name</label>
