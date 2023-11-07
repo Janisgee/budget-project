@@ -1,9 +1,14 @@
 import './css/btn.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { logout } from '../js/api-service';
+import { useAuth } from '../contexts/authContext';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBarAfterLogin({ toggle, ontoggle }) {
+  const { logoutUserData } = useAuth();
+  const navigate = useNavigate();
+
   const handleToggleChange = (e) => {
     if (e.target.textContent === 'Overview') {
       ontoggle('Overview');
@@ -13,6 +18,13 @@ export default function NavBarAfterLogin({ toggle, ontoggle }) {
       ontoggle('Setting');
     }
   };
+
+  function handleLogout(e) {
+    e.preventDefault();
+    logout();
+    logoutUserData();
+    navigate('/');
+  }
   return (
     <nav className="navBarAfterLogin">
       <Link to="/user/overview" className="logo navLink link">
@@ -48,9 +60,9 @@ export default function NavBarAfterLogin({ toggle, ontoggle }) {
         >
           <FontAwesomeIcon icon={faGear} />
         </Link>
-        <Link to="/" className="link btn">
+        <button className="link btn" onClick={handleLogout}>
           Log&nbsp;Out
-        </Link>
+        </button>
       </div>
     </nav>
   );
