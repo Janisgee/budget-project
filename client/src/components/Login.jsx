@@ -1,21 +1,9 @@
 import { useRef } from 'react';
 import './css/form.css';
-import { doLogin, isLoggedIn } from '../js/api-service';
+import { doLogin } from '../js/api-service';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/authContext';
-
-function formatUserName(name) {
-  const newName = name.toLowerCase();
-  const firstLetter = newName.charAt(0);
-  const firstLetterCap = firstLetter.toUpperCase();
-  const remainingLetters = newName.slice(1);
-  const capitalizedName = firstLetterCap + remainingLetters;
-
-  return capitalizedName;
-}
 
 export default function Login() {
-  const { getLoginUserData, getUserName } = useAuth();
   const formRef = useRef();
   const navigate = useNavigate();
 
@@ -29,15 +17,10 @@ export default function Login() {
     if (!email || !password) return;
 
     try {
-      const userData = await doLogin(email, password);
-      getLoginUserData(userData.user);
-      const userName = formatUserName(userData.user.name);
-      getUserName(userName);
-      if (isLoggedIn()) {
-        window.setTimeout(() => {
-          navigate('/user/overview');
-        }, 2000);
-      }
+      await doLogin(email, password);
+      window.setTimeout(() => {
+        navigate('/user/overview');
+      }, 2000);
     } catch (err) {
       formRef.current.reset();
     }
@@ -55,7 +38,7 @@ export default function Login() {
             name="email"
             id="email"
             autoComplete="on"
-            value="user2@gmail.com"
+            value="user3@gmail.com"
             onChange={(e) => e.target.value}
           />
         </div>

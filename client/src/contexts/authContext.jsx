@@ -1,5 +1,15 @@
 import { createContext, useContext, useReducer } from 'react';
 
+function formatUserName(name) {
+  const newName = name.toLowerCase();
+  const firstLetter = newName.charAt(0);
+  const firstLetterCap = firstLetter.toUpperCase();
+  const remainingLetters = newName.slice(1);
+  const capitalizedName = firstLetterCap + remainingLetters;
+
+  return capitalizedName;
+}
+
 const AuthContext = createContext();
 const initalState = {
   user: {},
@@ -38,6 +48,8 @@ function AuthProvider({ children }) {
 
   function getLoginUserData(userData) {
     dispatch({ type: 'loginIsTrue', payload: userData });
+    const userName = formatUserName(userData.name);
+    getUserName(userName);
   }
 
   function getUserName(name) {
