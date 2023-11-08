@@ -17,8 +17,9 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // 1)MIDDLEWARES
+
 //Middleware to helps secure Express apps by setting HTTP response headers
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(
   cors({
     origin: 'http://localhost:3001',
@@ -26,6 +27,7 @@ app.use(
   }),
 );
 
+app.use('/img/users', express.static('public/img/users'));
 //Middleware to allow us to see request data in console and limited access with only environment = development
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
