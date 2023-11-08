@@ -7,45 +7,58 @@ import { showAlert } from '../js/alerts';
 
 export default function Account() {
   const { user, updateUser } = useAuth();
-  const [file, setFile] = useState(user.photo);
+  const [fileName, setFileName] = useState(user.photo);
+  const [imageFile, setImageFile] = useState(null);
   const settingUserFormRef = useRef();
   const uploadPhoto = document.getElementById('photo');
   const userIcon = document.getElementById('userIcon');
 
   console.log(user);
   async function getFormDetailsAndUpdate() {
-    const formData = new FormData(settingUserFormRef.current);
-    const data = Object.fromEntries(formData.entries());
+    // const formData = new FormData(settingUserFormRef.current);
+    // const data = Object.fromEntries(formData.entries());
 
-    if (file) {
-      data.photo = file;
-    } else {
-      data.photo = user.photo;
-    }
+    // // if (fileName) {
+    // //   data.photo = fileName;
+    // if (imageFile) {
+    //   data.photo = imageFile;
+    // } else {
+    //   data.photo = user.photo;
+    // }
+
+    // if (!imageFile) {
+    //   return;
+    // }
+    const formData = new FormData(settingUserFormRef.current);
 
     try {
       //Update user information to server
-      await patchUpdateMe(data, 'account');
+      await patchUpdateMe(formData, 'account');
     } catch (err) {
       console.log(err);
       showAlert('error', err.message, 3);
       return;
     }
     //Update user information UI
-    updateUser(user, data);
-
-    setFile('');
+    if (fileName) {
+      formData.photo = fileName;
+    }
+    updateUser(user, formData);
+    window.location.reload(true);
   }
 
   function handlePhotoChange(e) {
     if (e.target.files.length < 1) return;
     const newPhotoName = e.target.files[0].name;
-    setFile(newPhotoName);
+    const file = e.target.files[0];
+    console.log(file);
+    setImageFile(file);
+    setFileName(newPhotoName);
     e.preventDefault();
     if (uploadPhoto) {
-      const [file] = uploadPhoto.files;
-      if (file) {
-        userIcon.src = URL.createObjectURL(file);
+      const [fileName] = uploadPhoto.files;
+      if (fileName) {
+        userIcon.src = URL.createObjectURL(fileName);
       }
     }
   }
@@ -92,7 +105,7 @@ export default function Account() {
           <div className="settingForm_End">
             <div className="imageSet">
               <img
-                src={`/img/users/${user.photo}`}
+                src={`http://localhost:3000/img/users/${user.photo}`}
                 className="settingform_UserImage"
                 id="userIcon"
                 alt={user.name}
@@ -105,7 +118,7 @@ export default function Account() {
                 accept="image/*"
                 onChange={handlePhotoChange}
               />
-              <label forhtml="photo">Choose new photo</label>
+              <label htmlFor="photo">Choose new photo</label>
             </div>
             <a className="link btn" href="/" onClick={handleUpdate}>
               Save&nbsp;Settings
