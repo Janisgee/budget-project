@@ -8,16 +8,6 @@ import { useTransaction } from '../contexts/transactionContext';
 import { expenseCategory, incomeCategory } from '../js/categories';
 import { postNewTransaction } from '../js/api-service';
 
-// function formatUserName(name) {
-//   const userName = name.toLowerCase();
-//   const firstLetter = userName.charAt(0);
-//   const firstLetterCap = firstLetter.toUpperCase();
-//   const remainingLetters = userName.slice(1);
-//   const capitalizedName = firstLetterCap + remainingLetters;
-
-//   return capitalizedName;
-// }
-
 export default function Profile({ toggle }) {
   const { allTransactionBalance, expenseSum, incomeSum } = useOverview();
   const { user, userName } = useAuth();
@@ -60,7 +50,12 @@ export default function Profile({ toggle }) {
     <div className="profile-container">
       <div className="profile">
         <h3>Welcome back, {userName} !</h3>
-        <img src={`/img/users/${user.photo}`} alt={userName} />
+        <img
+          src={`http://localhost:3000/img/users/${
+            user.photo ? user.photo : 'default.jpg'
+          }`}
+          alt={userName}
+        />
       </div>
       {toggle === 'Overview' && (
         <ul className="total">
