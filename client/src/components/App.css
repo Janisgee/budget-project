@@ -32,6 +32,13 @@ h2 {
   justify-content: space-between;
   align-items: center;
 }
+.openEyeIcon {
+  margin-left: 0.7rem;
+  width: 1rem;
+}
+.openEyeIcon:hover {
+  cursor: pointer;
+}
 
 .strong-font {
   font-weight: 600;

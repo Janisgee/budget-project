@@ -236,11 +236,17 @@ async function responseError(response, msg) {
   );
 }
 
-export async function patchUpdateMe(data) {
+//type is either 'password' or 'data'
+export async function patchUpdateMe(data, type) {
   console.log(data);
   console.log(JSON.stringify(data));
 
-  const response = await fetch(`http://localhost:3000/api/v1/users/updateMe`, {
+  const url =
+    type === 'password'
+      ? 'http://localhost:3000/api/v1/users/updateMyPassword'
+      : `http://localhost:3000/api/v1/users/updateMe`;
+
+  const response = await fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -251,7 +257,8 @@ export async function patchUpdateMe(data) {
   console.log(response);
 
   if (response.status === 200) {
-    showAlert('success', 'Your account settings have been updated!', 3);
+    showAlert('success', `Your ${type} settings have been updated!`, 4);
+    // window.location.reload(true);
   } else {
     const body = await response.json();
     throw new Error(body.message);

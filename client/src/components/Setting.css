@@ -37,7 +37,6 @@
   padding: 0.5rem 1.75rem;
   border: none;
   width: 100%;
-  background-color: #fff;
   background-color: #f2f2f2;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
@@ -46,6 +45,10 @@
   border-radius: 4px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.settingform__input::-webkit-input-placeholder {
+  color: #d1d0d0;
 }
 
 .settingform__input:focus {

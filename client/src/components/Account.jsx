@@ -16,18 +16,16 @@ export default function Account() {
   async function getFormDetailsAndUpdate() {
     const formData = new FormData(settingUserFormRef.current);
     const data = Object.fromEntries(formData.entries());
-    console.log(file);
 
     if (file) {
       data.photo = file;
     } else {
       data.photo = user.photo;
     }
-    console.log(file);
 
     try {
       //Update user information to server
-      await patchUpdateMe(data);
+      await patchUpdateMe(data, 'account');
     } catch (err) {
       console.log(err);
       showAlert('error', err.message, 3);
@@ -107,7 +105,7 @@ export default function Account() {
                 accept="image/*"
                 onChange={handlePhotoChange}
               />
-              <label for="photo">Choose new photo</label>
+              <label forhtml="photo">Choose new photo</label>
             </div>
             <a className="link btn" href="/" onClick={handleUpdate}>
               Save&nbsp;Settings
