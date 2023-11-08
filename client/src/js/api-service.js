@@ -248,10 +248,7 @@ export async function patchUpdateMe(data, type) {
 
   const response = await fetch(url, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    body: data,
     credentials: 'include',
   });
   console.log(response);
