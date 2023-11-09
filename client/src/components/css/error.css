@@ -6,4 +6,9 @@
   transform: translate(-50%, -50%);
   max-width: 80rem;
   text-align: center;
+  font-size: x-large;
+}
+
+.errorTitle {
+  margin-top: 10rem;
 }
