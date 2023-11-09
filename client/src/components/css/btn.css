@@ -75,3 +75,20 @@
   display: block;
   float: right;
 }
+
+.forgetPasswordbtn {
+  background-color: transparent;
+  padding: 0 0;
+  border: none;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.forgetPasswordbtn:hover {
+  cursor: pointer;
+}
+
+.resetPasswordBtn {
+  display: block;
+  margin: 1rem auto 0;
+}
