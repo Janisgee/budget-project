@@ -20,7 +20,7 @@ export default function SignUp() {
       showAlert(
         'error',
         'Missing information, please fill in all the blank from the form.',
-        4
+        5
       );
       return;
     }
@@ -52,29 +52,19 @@ export default function SignUp() {
         <h2>✒️ Sign Up</h2>
         <div className="row">
           <label htmlFor="userName">User Name</label>
-          <input type="text" id="userName" name="name" defaultValue="Janis" />
+          <input type="text" id="userName" name="name" />
         </div>
 
         <div className="row">
           <label htmlFor="sign-up-email">Email address</label>
-          <input
-            type="text"
-            id="sign-up-email"
-            name="email"
-            defaultValue="janisgeegee@gmail.com"
-          />
+          <input type="text" id="sign-up-email" name="email" />
         </div>
 
         <div className="row">
           <label htmlFor="sign-up-password">
             Password (Minium 8 characters)
           </label>
-          <input
-            type="password"
-            id="sign-up-password"
-            name="password"
-            defaultValue="pass1234"
-          />
+          <input type="password" id="sign-up-password" name="password" />
         </div>
 
         <div className="row">
@@ -83,7 +73,6 @@ export default function SignUp() {
             type="password"
             id="sign-up-passwordConfirm"
             name="passwordConfirm"
-            defaultValue="pass1234"
           />
         </div>
 

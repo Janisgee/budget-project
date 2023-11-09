@@ -50,7 +50,6 @@ export default function Login() {
             name="email"
             id="email"
             autoComplete="on"
-            value="user3@gmail.com"
             onChange={(e) => e.target.value}
           />
         </div>
@@ -62,7 +61,6 @@ export default function Login() {
             name="password"
             id="password"
             autoComplete="on"
-            value="pass1234"
             onChange={(e) => e.target.value}
           />
           <button
