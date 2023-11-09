@@ -4,6 +4,7 @@ import AppBeforeLogin from './AppBeforeLogin';
 import Login from './Login';
 import Main from './Main';
 import SignUp from './SignUp';
+import ResetPassword from './ResetPassword';
 import ErrorPage from './ErrorPageBeforeLogin';
 
 import AppAfterLogin from './AppAfterLogin';
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <Main />,
+      },
+      {
+        path: 'resetPassword/:token',
+        element: <ResetPassword />,
       },
     ],
   },
