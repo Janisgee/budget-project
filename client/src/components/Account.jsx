@@ -15,20 +15,6 @@ export default function Account() {
 
   console.log(user);
   async function getFormDetailsAndUpdate() {
-    // const formData = new FormData(settingUserFormRef.current);
-    // const data = Object.fromEntries(formData.entries());
-
-    // // if (fileName) {
-    // //   data.photo = fileName;
-    // if (imageFile) {
-    //   data.photo = imageFile;
-    // } else {
-    //   data.photo = user.photo;
-    // }
-
-    // if (!imageFile) {
-    //   return;
-    // }
     const formData = new FormData(settingUserFormRef.current);
 
     try {
