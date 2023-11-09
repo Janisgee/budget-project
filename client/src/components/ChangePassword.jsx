@@ -93,7 +93,7 @@ export default function ChangePassword() {
         </div>
         <div className="settingFormGroup">
           <label forhtml="password" className="settingForm__label">
-            New Password
+            New Password (Minium 8 characters)
           </label>
           <span className="flex-space-between">
             <input

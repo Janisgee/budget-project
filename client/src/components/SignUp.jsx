@@ -66,7 +66,9 @@ export default function SignUp() {
         </div>
 
         <div className="row">
-          <label htmlFor="sign-up-password">Password</label>
+          <label htmlFor="sign-up-password">
+            Password (Minium 8 characters)
+          </label>
           <input
             type="password"
             id="sign-up-password"
