@@ -66,6 +66,34 @@ export async function logout() {
   }
 }
 
+export async function signup(data) {
+  const response = await fetch(`http://localhost:3000/api/v1/users/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify(data),
+    credentials: 'include',
+  });
+
+  if (response.status === 201) {
+    const body = await response.json();
+    userId = body.data.user._id;
+    showAlert('success', 'Sign up successfully and logged in.', 3);
+    getAllTransactions();
+    return body.data;
+  } else {
+    throw new Error(
+      showAlert(
+        'error',
+        'Fail to sign up an account, please fill in a valid information.',
+        3
+      )
+    );
+  }
+}
+
 export async function postNewTransaction(data) {
   const response = await fetch(
     `http://localhost:3000/api/v1/users/${userId}/transaction`,
