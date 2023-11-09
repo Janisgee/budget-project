@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './ForgetPassword.css';
 import { showAlert } from '../js/alerts';
-import { resetPassword } from '../js/api-service';
+import { forgetPassword } from '../js/api-service';
 
 export default function ForgetPassword() {
   const [emailReset, setemailReset] = useState('');
@@ -11,7 +11,7 @@ export default function ForgetPassword() {
     document.getElementById('resetPasswordBtn').textContent = 'Loading ...';
     try {
       //Connect resetpassword to server api
-      await resetPassword(emailReset);
+      await forgetPassword(emailReset);
       const modalElement = document.getElementById('forgetPassword');
 
       //Close modal
