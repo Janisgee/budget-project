@@ -17,6 +17,8 @@ export async function checkIsLoggedIn() {
     userId = data.data.user._id;
     console.log(data);
     return data;
+  } else {
+    return;
   }
 }
 
@@ -94,7 +96,33 @@ export async function signup(data) {
   }
 }
 
-export async function resetPassword(email) {
+export async function resetPassword(password, passwordConfirm, params) {
+  const response = await fetch(
+    `http://localhost:3000/api/v1/users/resetPassword/${params}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({ password, passwordConfirm }),
+      credentials: 'include',
+    }
+  );
+
+  if (response.status === 200) {
+    showAlert(
+      'success',
+      'New password has been reset. Please login and try it.',
+      5
+    );
+  } else {
+    const body = await response.json();
+    throw new Error(body.message);
+  }
+}
+
+export async function forgetPassword(email) {
   const response = await fetch(
     `http://localhost:3000/api/v1/users/forgotPassword`,
     {
@@ -104,7 +132,7 @@ export async function resetPassword(email) {
         // Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({ email }),
-      // credentials: 'include',
+      credentials: 'include',
     }
   );
 
