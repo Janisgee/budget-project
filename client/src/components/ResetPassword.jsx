@@ -23,16 +23,11 @@ export default function ResetPassword() {
   async function handleSubmitResetPassword(e) {
     e.preventDefault();
     const formData = new FormData(newPasswordFormRef.current);
-    console.log(formData);
-    for (const ent of formData.entries()) {
-      console.log(ent);
-    }
+
     const password = formData.get('password');
     const passwordConfirm = formData.get('passwordConfirm');
 
-    console.log(params);
     const { token } = params;
-    console.log(token);
     try {
       await resetPassword(password, passwordConfirm, token);
       window.setTimeout(() => {

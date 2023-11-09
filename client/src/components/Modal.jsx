@@ -42,7 +42,7 @@ export default function Modal() {
 
     const updatedData = mergeUpdatedTransAndOldTrans(data);
     updatedData.date = new Date(updatedData.date).toISOString();
-    console.log(updatedData);
+
     //Update Trans in server (Need to make sure server load first)
     await patchUpdateTransaction(updatedData, editTrans._id);
 
@@ -57,7 +57,6 @@ export default function Modal() {
 
   function handleEditTypeChange(e) {
     e.preventDefault();
-    console.log(e.target.value);
     setEditType(e.target.value);
   }
 

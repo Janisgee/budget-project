@@ -103,8 +103,6 @@ exports.getUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  // console.log(req.file);
-  // console.log(req.body);
   //Create Error if password is in the field
   if (req.body.password || req.body.passwordConfirm) {
     return next(

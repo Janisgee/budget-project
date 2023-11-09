@@ -26,7 +26,6 @@ export default function Profile({ toggle }) {
     //Add new transaction to server
     await postNewTransaction(data);
 
-    console.log(data);
     //Add new transaction to UI
     createTransaction();
 
@@ -42,9 +41,6 @@ export default function Profile({ toggle }) {
     if (e.target.value === undefined) return;
     setNewTransactionType(e.target.value);
   }
-  // console.log(user.name);
-  console.log(user);
-  console.log(userName);
 
   return (
     <div className="profile-container">

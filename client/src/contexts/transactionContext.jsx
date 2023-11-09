@@ -154,7 +154,6 @@ function TransactionProvider({ children }) {
   }
 
   function updateTransaction(updatedTrans) {
-    console.log(updatedTrans);
     const indexToUpdate = transactions.findIndex(
       (trans) => trans._id === updatedTrans._id
     );

@@ -30,10 +30,9 @@ export default function Overview() {
   //Get unique array of category and value for the month
 
   function formatDate(date) {
-    // console.log(date);
     const option = { month: 'short', year: 'numeric', timezone: 'Perth' };
     const newDate = new Date(date).toLocaleDateString('en-au', option);
-    // console.log(newDate);
+
     return newDate;
   }
 

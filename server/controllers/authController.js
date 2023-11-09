@@ -60,7 +60,6 @@ exports.login = catchAsync(async (req, res, next) => {
     );
   // Check if user exist and password correct
   const user = await User.findOne({ email }).select('+password');
-  // console.log(user);
 
   if (!user || !(await user.correctPassword(password, user.password)))
     return next(
@@ -84,8 +83,8 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   //Get a token and check if it is there.
   let token;
-  console.log(req.headers.authorization);
-  console.log(req.cookies);
+  // console.log(req.headers.authorization);
+  // console.log(req.cookies);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -176,7 +175,7 @@ exports.forgotPassword = catchAsync(async function (req, res, next) {
   //create token
   const resetToken = await user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
-  console.log(resetToken);
+  // console.log(resetToken);
   // Send token to user
   const resetTokenUrl = `${req.protocol}://localhost:3001/resetPassword/${resetToken}`;
 
@@ -197,7 +196,6 @@ exports.forgotPassword = catchAsync(async function (req, res, next) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
-    console.log(err);
 
     return next(
       new AppError(

@@ -15,7 +15,7 @@ export async function checkIsLoggedIn() {
   if (response.status === 200) {
     const data = await response.json();
     userId = data.data.user._id;
-    console.log(data);
+
     return data;
   } else {
     return;
@@ -188,7 +188,6 @@ export async function patchUpdateTransaction(data) {
       credentials: 'include',
     }
   );
-  console.log(response);
 
   if (response.status === 200) {
     showAlert('success', 'Transaction has been updated!', 3);
@@ -215,7 +214,6 @@ export async function deleteServerTransaction(transactionId) {
       credentials: 'include',
     }
   );
-  console.log(response);
 
   if (response.status === 204) {
     showAlert('success', 'Transaction has been deleted!', 3);
@@ -320,9 +318,6 @@ async function responseError(response, msg) {
 
 //type is either 'password' or 'data'
 export async function patchUpdateMe(data, type) {
-  console.log(data);
-  console.log(JSON.stringify(data));
-
   const url =
     type === 'password'
       ? 'http://localhost:3000/api/v1/users/updateMyPassword'
@@ -333,7 +328,6 @@ export async function patchUpdateMe(data, type) {
     body: data,
     credentials: 'include',
   });
-  console.log(response);
 
   if (response.status === 200) {
     showAlert('success', `Your ${type} settings have been updated!`, 4);

@@ -24,7 +24,6 @@ export default function Transaction() {
 
   const periodBalance = incomeSum - expenseSum;
 
-  console.log(monthList);
   useEffect(() => {
     function getPreviousMonthSelection() {
       const passMonthList = [];

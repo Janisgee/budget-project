@@ -29,7 +29,6 @@ export default function ChangePassword() {
     const passwordConfirm = document.getElementById('passwordConfirm').value;
 
     const data = { currentPassword, password, passwordConfirm };
-    console.log(data);
 
     try {
       //Update server password
@@ -41,13 +40,11 @@ export default function ChangePassword() {
       document.getElementById('password').value = '';
       document.getElementById('passwordConfirm').value = '';
     } catch (err) {
-      console.log(err);
       document.querySelector('.passwordButton').textContent = 'Save Password';
       showAlert('error', err.message, 4);
       return;
     }
   }
-  console.log(showCurrentPassword);
 
   function handleShowCurrentPasswordBtn() {
     setShowCurrentPassword(!showCurrentPassword);

@@ -11,9 +11,7 @@ export default function Account() {
   const settingUserFormRef = useRef();
   // const uploadPhoto = document.getElementById('photo');
   const userIconRef = useRef();
-  // console.log(uploadPhoto);
-  // console.log(uploadPhoto.files);
-  console.log(user);
+
   async function getFormDetailsAndUpdate() {
     const formData = new FormData(settingUserFormRef.current);
 
@@ -21,7 +19,6 @@ export default function Account() {
       //Update user information to server
       await patchUpdateMe(formData, 'account');
     } catch (err) {
-      console.log(err);
       showAlert('error', err.message, 3);
       return;
     }
@@ -34,20 +31,15 @@ export default function Account() {
   }
 
   function handlePhotoChange(e) {
-    console.log(e.target.files);
     if (e.target.files.length < 1) return;
     const newPhotoName = e.target.files[0].name;
     setFileName(newPhotoName);
     e.preventDefault();
     const imageFile = e.target.files[0];
-    console.log(imageFile);
+
     if (imageFile) {
       const userIcon = userIconRef.current;
-      console.log(URL.createObjectURL(imageFile));
-      console.log(userIcon);
-      console.log(userIcon.src);
       userIcon.src = URL.createObjectURL(imageFile);
-      console.log(userIcon.src);
     }
   }
 
