@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+
 import './css/form.css';
 import { doLogin } from '../js/api-service';
 import { showAlert } from '../js/alerts';
 import { useNavigate } from 'react-router-dom';
+
+import Forgetpassword from './Forgetpassword';
 
 export default function Login() {
   const formRef = useRef();
@@ -27,6 +30,12 @@ export default function Login() {
     } catch (err) {
       formRef.current.reset();
     }
+  }
+
+  function handleOpenModal(e) {
+    e.preventDefault();
+    const modalElement = document.getElementById('forgetPassword');
+    modalElement.classList.remove('displayNone');
   }
 
   return (
@@ -56,12 +65,22 @@ export default function Login() {
             value="pass1234"
             onChange={(e) => e.target.value}
           />
+          <button
+            className="forgetPasswordbtn"
+            type="button"
+            onClick={handleOpenModal}
+          >
+            Forget password?
+          </button>
         </div>
 
         <div>
-          <button className="btn">Login</button>
+          <button className="btn" type="submit">
+            Login
+          </button>
         </div>
       </form>
+      <Forgetpassword />
     </div>
   );
 }
