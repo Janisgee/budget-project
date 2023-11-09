@@ -86,13 +86,8 @@ export async function signup(data) {
     getAllTransactions();
     return body.data;
   } else {
-    throw new Error(
-      showAlert(
-        'error',
-        'Fail to sign up an account, please fill in a valid information.',
-        3
-      )
-    );
+    const body = await response.json();
+    throw new Error(showAlert('error', body.message, 5));
   }
 }
 
