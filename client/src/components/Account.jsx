@@ -8,11 +8,11 @@ import { showAlert } from '../js/alerts';
 export default function Account() {
   const { user, updateUser } = useAuth();
   const [fileName, setFileName] = useState(user.photo);
-  const [imageFile, setImageFile] = useState(null);
   const settingUserFormRef = useRef();
-  const uploadPhoto = document.getElementById('photo');
-  const userIcon = document.getElementById('userIcon');
-
+  // const uploadPhoto = document.getElementById('photo');
+  const userIconRef = useRef();
+  // console.log(uploadPhoto);
+  // console.log(uploadPhoto.files);
   console.log(user);
   async function getFormDetailsAndUpdate() {
     const formData = new FormData(settingUserFormRef.current);
@@ -34,18 +34,20 @@ export default function Account() {
   }
 
   function handlePhotoChange(e) {
+    console.log(e.target.files);
     if (e.target.files.length < 1) return;
     const newPhotoName = e.target.files[0].name;
-    const file = e.target.files[0];
-    console.log(file);
-    setImageFile(file);
     setFileName(newPhotoName);
     e.preventDefault();
-    if (uploadPhoto) {
-      const [fileName] = uploadPhoto.files;
-      if (fileName) {
-        userIcon.src = URL.createObjectURL(fileName);
-      }
+    const imageFile = e.target.files[0];
+    console.log(imageFile);
+    if (imageFile) {
+      const userIcon = userIconRef.current;
+      console.log(URL.createObjectURL(imageFile));
+      console.log(userIcon);
+      console.log(userIcon.src);
+      userIcon.src = URL.createObjectURL(imageFile);
+      console.log(userIcon.src);
     }
   }
 
@@ -94,6 +96,7 @@ export default function Account() {
                 src={`http://localhost:3000/img/users/${user.photo}`}
                 className="settingform_UserImage"
                 id="userIcon"
+                ref={userIconRef}
                 alt={user.name}
               />
               <input
