@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import './css/form.css';
 import { doLogin } from '../js/api-service';
+import { showAlert } from '../js/alerts';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -14,8 +15,10 @@ export default function Login() {
     const email = data.get('email');
     const password = data.get('password');
 
-    if (!email || !password) return;
-
+    if (!email || !password) {
+      showAlert('error', 'Please fill in all the log in details.', 4);
+      return;
+    }
     try {
       await doLogin(email, password);
       window.setTimeout(() => {
