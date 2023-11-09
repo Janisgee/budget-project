@@ -94,6 +94,32 @@ export async function signup(data) {
   }
 }
 
+export async function resetPassword(email) {
+  const response = await fetch(
+    `http://localhost:3000/api/v1/users/forgotPassword`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({ email }),
+      // credentials: 'include',
+    }
+  );
+
+  if (response.status === 200) {
+    showAlert(
+      'success',
+      'Password reset link has been sent to your email to reset a new password.📧',
+      5
+    );
+  } else {
+    const body = await response.json();
+    throw new Error(body.message);
+  }
+}
+
 export async function postNewTransaction(data) {
   const response = await fetch(
     `http://localhost:3000/api/v1/users/${userId}/transaction`,
