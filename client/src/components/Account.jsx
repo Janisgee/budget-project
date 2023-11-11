@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { patchUpdateMe } from '../js/api-service';
 import { showAlert } from '../js/alerts';
+import { CONFIG } from '../js/config';
 
 export default function Account() {
   const { user, updateUser } = useAuth();
@@ -85,7 +86,7 @@ export default function Account() {
           <div className="settingForm_End">
             <div className="imageSet">
               <img
-                src={`http://localhost:3000/img/users/${user.photo}`}
+                src={`${CONFIG.SERVER_URL}/img/users/${user.photo}`}
                 className="settingform_UserImage"
                 id="userIcon"
                 ref={userIconRef}

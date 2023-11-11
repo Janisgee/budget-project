@@ -7,6 +7,7 @@ import { useOverview } from '../contexts/overviewContext';
 import { useTransaction } from '../contexts/transactionContext';
 import { expenseCategory, incomeCategory } from '../js/categories';
 import { postNewTransaction } from '../js/api-service';
+import { CONFIG } from '../js/config';
 
 export default function Profile({ toggle }) {
   const { allTransactionBalance, expenseSum, incomeSum } = useOverview();
@@ -47,7 +48,7 @@ export default function Profile({ toggle }) {
       <div className="profile">
         <h3>Welcome back, {userName} !</h3>
         <img
-          src={`http://localhost:3000/img/users/${
+          src={`${CONFIG.SERVER_URL}/img/users/${
             user.photo ? user.photo : 'default.jpg'
           }`}
           alt={userName}

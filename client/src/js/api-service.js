@@ -1,9 +1,10 @@
 import { showAlert } from '../js/alerts';
+import { CONFIG } from './config';
 
 let userId;
 
 export async function checkIsLoggedIn() {
-  const response = await fetch('http://localhost:3000/api/v1/users/me', {
+  const response = await fetch(`${CONFIG.SERVER_URL}/api/v1/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -23,7 +24,7 @@ export async function checkIsLoggedIn() {
 }
 
 export async function doLogin(email, password) {
-  const response = await fetch('http://localhost:3000/api/v1/users/login', {
+  const response = await fetch(`${CONFIG.SERVER_URL}/api/v1/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ export async function doLogin(email, password) {
 
 export async function logout() {
   try {
-    const response = await fetch('http://localhost:3000/api/v1/users/logout', {
+    const response = await fetch(`${CONFIG.SERVER_URL}/api/v1/users/logout`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ export async function logout() {
 }
 
 export async function signup(data) {
-  const response = await fetch(`http://localhost:3000/api/v1/users/signup`, {
+  const response = await fetch(`${CONFIG.SERVER_URL}/api/v1/users/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -93,7 +94,7 @@ export async function signup(data) {
 
 export async function resetPassword(password, passwordConfirm, params) {
   const response = await fetch(
-    `http://localhost:3000/api/v1/users/resetPassword/${params}`,
+    `${CONFIG.SERVER_URL}/api/v1/users/resetPassword/${params}`,
     {
       method: 'PATCH',
       headers: {
@@ -119,7 +120,7 @@ export async function resetPassword(password, passwordConfirm, params) {
 
 export async function forgetPassword(email) {
   const response = await fetch(
-    `http://localhost:3000/api/v1/users/forgotPassword`,
+    `${CONFIG.SERVER_URL}/api/v1/users/forgotPassword`,
     {
       method: 'POST',
       headers: {
@@ -145,7 +146,7 @@ export async function forgetPassword(email) {
 
 export async function postNewTransaction(data) {
   const response = await fetch(
-    `http://localhost:3000/api/v1/users/${userId}/transaction`,
+    `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction`,
     {
       method: 'POST',
       headers: {
@@ -172,7 +173,7 @@ export async function postNewTransaction(data) {
 
 export async function patchUpdateTransaction(data) {
   const response = await fetch(
-    `http://localhost:3000/api/v1/users/${userId}/transaction/${data._id}`,
+    `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/${data._id}`,
     {
       method: 'PATCH',
       headers: {
@@ -199,7 +200,7 @@ export async function patchUpdateTransaction(data) {
 
 export async function deleteServerTransaction(transactionId) {
   const response = await fetch(
-    `http://localhost:3000/api/v1/users/${userId}/transaction/${transactionId}`,
+    `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/${transactionId}`,
     {
       method: 'DELETE',
       headers: {
@@ -226,9 +227,9 @@ export async function deleteServerTransaction(transactionId) {
 export async function getAllTransactions(start = undefined, end = undefined) {
   let url;
   if (start === undefined && end === undefined) {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction`;
   } else {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction?start=${start}&end=${end}`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction?start=${start}&end=${end}`;
   }
 
   const response = await fetch(url, {
@@ -252,9 +253,9 @@ export async function getAllTransactions(start = undefined, end = undefined) {
 export async function getTransactionStats(start, end, type) {
   let url;
   if (start === undefined && end === undefined) {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats?type=${type}`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/stats?type=${type}`;
   } else {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats?start=${start}&end=${end}&type=${type}`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/stats?start=${start}&end=${end}&type=${type}`;
   }
 
   const response = await fetch(url, {
@@ -277,9 +278,9 @@ export async function getTransactionStats(start, end, type) {
 export async function getTransactionSummary(start, end) {
   let url;
   if (start === undefined && end === undefined) {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/stats`;
   } else {
-    url = `http://localhost:3000/api/v1/users/${userId}/transaction/stats?start=${start}&end=${end}`;
+    url = `${CONFIG.SERVER_URL}/api/v1/users/${userId}/transaction/stats?start=${start}&end=${end}`;
   }
 
   const response = await fetch(url, {
@@ -315,8 +316,8 @@ async function responseError(response, msg) {
 export async function patchUpdateMe(data, type) {
   const url =
     type === 'password'
-      ? 'http://localhost:3000/api/v1/users/updateMyPassword'
-      : `http://localhost:3000/api/v1/users/updateMe`;
+      ? `${CONFIG.SERVER_URL}/api/v1/users/updateMyPassword`
+      : `${CONFIG.SERVER_URL}/api/v1/users/updateMe`;
 
   const response = await fetch(url, {
     method: 'PATCH',
