@@ -25,6 +25,7 @@ const createSendToken = (user, statusCode, res) => {
 
   if (process.env === 'production') {
     cookiesOptions.secure = true;
+    cookiesOptions.sameSite = 'None';
   }
 
   user.password = undefined;
@@ -76,6 +77,7 @@ exports.logout = (req, res) => {
   res.cookie('jwtBudget', 'loggedout', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
+    sameSite: 'None',
   });
   res.status(200).json({ status: 'success' });
 };
