@@ -5,7 +5,7 @@ function getConfig() {
     };
   } else if (window.location.hostname === 'money-tracker-vp3w.onrender.com') {
     return {
-      SERVER_URL: 'https://money-tracker-server.onrender.com/',
+      SERVER_URL: 'https://money-tracker-server.onrender.com',
     };
   }
 }
