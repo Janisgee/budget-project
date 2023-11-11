@@ -48,6 +48,8 @@ const limiter = rateLimit({
   message: 'Too many requests from same IP, please try again after an hour.',
 });
 
+// Expect X-Forwarded-For from production proxy
+app.set('trust-proxy', true);
 app.use('/api', limiter);
 
 //
