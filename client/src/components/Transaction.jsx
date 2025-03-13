@@ -16,7 +16,7 @@ export default function Transaction() {
     selectedMonth,
     monthFiler,
   } = useTransaction();
-  const { user, userName } = useAuth();
+  const {  userName } = useAuth();
 
   const [monthList, setMonthList] = useState([]);
 

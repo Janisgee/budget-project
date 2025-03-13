@@ -88,11 +88,13 @@ function TransactionProvider({ children }) {
   useEffect(() => {
     //Fetch data with filter(date period)
     fetchTransactionSummary();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   useEffect(() => {
     //Fetch data until specific end date
     fetchTransactionInSpecificEndDay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endDate]);
 
   //Fetch data with filter(date period)
